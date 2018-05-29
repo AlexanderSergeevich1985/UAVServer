@@ -9,6 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Authentification {
 }
 
@@ -25,6 +29,29 @@ class UserInfo {
     public void setEmail(String email_) { email = email_; }
     public String getTelephone() { return telephone; }
     public void setTelephone(String telephone_) { email = telephone_; }
+    public Date getBirthday() {
+        SimpleDateFormat sdfr = new SimpleDateFormat("dd/MMM/yyyy");
+        Date birth_date = null;
+        try {
+            birth_date = sdfr.parse(birthday);
+        }
+        catch(Exception ex) {
+            System.out.println(ex);
+            return null;
+        }
+        return birth_date;
+    }
+    public boolean setBirthday(Date birthday_) {
+        SimpleDateFormat sdfr = new SimpleDateFormat("dd/MMM/yyyy");
+        try {
+            birthday = sdfr.format(birthday_);
+        }
+        catch(Exception ex) {
+            System.out.println(ex);
+            return false;
+        }
+        return true;
+    }
     @Id
     @Column(name = "ID")
     @GeneratedValue
@@ -37,4 +64,6 @@ class UserInfo {
     private String email;
     @Column(name = "TELEPHONE")
     private String telephone;
+    @Column(name = "BIRTHDAY")
+    private String birthday;
 }
