@@ -51,9 +51,6 @@
         <property name="configLocation">
             <value>classpath:/resources/hibernate.cfg.xml</value>
         </property>
-        <property name="configurationClass">
-            <value>org.hibernate.cfg.AnnotationConfiguration</value>
-        </property>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.show_sql">true</prop>
