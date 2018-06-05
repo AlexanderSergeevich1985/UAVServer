@@ -25,4 +25,14 @@ public class SparkDFS {
         JavaRDD<String> stringRDD = netNodesRDD.mapPartitions(new NetNodeWriter());
         stringRDD.saveAsTextFile(pathToFile);
     }
+    public NetNode findNodeById(JavaRDD<NetNode> netNodesRDD, Integer nodeId) {
+        List<NetNode> nodes = netNodesRDD.filter(new Function<NetNode, Boolean>() {
+            @Override
+            public Boolean call(NetNode netNode) throws Exception {
+                return netNode.getNodeId()==nodeId ? true : false;
+            }
+        }).distinct().collect();
+        if(nodes.isEmpty()) return null;
+        return nodes.get(0);
+    }
 }
