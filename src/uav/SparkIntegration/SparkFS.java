@@ -35,4 +35,7 @@ public class SparkFS {
         if(nodes.isEmpty()) return null;
         return nodes.get(0);
     }
+    public List<NetEdge> netNodesToEdges(JavaRDD<NetNode> netNodesRDD) {
+        return netNodesRDD.flatMap(new NetNodeToEdges()).distinct().collect();
+    }
 }
