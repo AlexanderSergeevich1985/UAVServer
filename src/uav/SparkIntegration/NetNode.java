@@ -33,4 +33,8 @@ public class NetNode implements Serializable {
     public List<Double> getAdjVertexDist() {
         return this.adjVertexDist;
     }
+    public void setVertex(Integer nodeId, Double distance) {
+        adjVertex.add(nodeId);
+        adjVertexDist.add(distance);
+    }
 }
