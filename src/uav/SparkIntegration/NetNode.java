@@ -10,6 +10,7 @@ import java.io.Serializable;
 public class NetNode implements Serializable {
     private Integer nodeId;
     private List<Integer> adjVertex;
+    private List<Double> adjVertexDist;
 
     public NetNode(Integer nodeId_) { this.nodeId = nodeId_; }
     public void setNodeId(Integer nodeId_) { this.nodeId = nodeId_; }
@@ -23,5 +24,12 @@ public class NetNode implements Serializable {
     }
     public List<Integer> getAdjVertex() {
         return this.adjVertex;
+    }
+    public void setAdjVertexDist(List<Double> adjVertexDist_) {
+        if(!this.adjVertex.isEmpty()) adjVertex.clear();
+        this.adjVertexDist.addAll(adjVertexDist_);
+    }
+    public List<Double> getAdjVertexDist() {
+        return this.adjVertexDist;
     }
 }
