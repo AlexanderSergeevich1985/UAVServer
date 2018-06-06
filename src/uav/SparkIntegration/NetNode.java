@@ -1,12 +1,13 @@
 package uav.SparkIntegration;
 
 import java.util.List;
+import java.io.Serializable;
 
 /**
  * Created by administrator on 05.06.18.
  */
 
-public class NetNode {
+public class NetNode implements Serializable {
     private Integer nodeId;
     private List<Integer> adjVertex;
 
