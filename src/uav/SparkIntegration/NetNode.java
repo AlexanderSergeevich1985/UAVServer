@@ -1,6 +1,7 @@
 package uav.SparkIntegration;
 
 import java.util.List;
+import java.util.LinkedList;
 import java.io.Serializable;
 
 /**
