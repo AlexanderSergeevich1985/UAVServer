@@ -12,7 +12,7 @@ import java.util.List;
  */
 
 @Component
-public class SparkDFS {
+public class SparkFS {
     @Autowired
     private JavaSparkContext javaSparkContext;
 
