@@ -37,12 +37,12 @@ public class UserProfile implements Serializable {
         else if(obj == null || !(obj instanceof UserProfile))
             return false;
         UserProfile other = (UserProfile) obj;
-        if(id == null || other.id != null) {
+        if(id == null || other.id == null) {
             return false;
         }
         else if(!id.equals(other.id))
             return false;
-        if(type == null || other.type != null) {
+        if(type == null || other.type == null) {
             return false;
         }
         else if(!type.equals(other.type))
