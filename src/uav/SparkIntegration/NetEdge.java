@@ -14,7 +14,7 @@ public class NetEdge implements Serializable {
     private String state;
 
     public NetEdge(Integer firstNodeId_, Integer secondNodeId_, Double distance_) {
-        this.firstNodeId = secondNodeId_;
+        this.firstNodeId = firstNodeId_;
         this.secondNodeId = secondNodeId_;
         this.distance = distance_;
         this.state = "Undefined";
