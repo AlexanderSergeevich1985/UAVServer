@@ -10,8 +10,8 @@ import java.io.Serializable;
 
 public class NetNode implements Serializable {
     private Integer nodeId;
-    private List<Integer> adjVertex = new LinkedList<>();;
-    private List<Double> adjVertexDist = new LinkedList<>();;
+    private List<Integer> adjVertex = new LinkedList<>();
+    private List<Double> adjVertexDist = new LinkedList<>();
 
     public NetNode(Integer nodeId_) { this.nodeId = nodeId_; }
     public void setNodeId(Integer nodeId_) { this.nodeId = nodeId_; }
