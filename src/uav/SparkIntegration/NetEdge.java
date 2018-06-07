@@ -49,4 +49,15 @@ public class NetEdge implements Serializable {
             return false;
         return true;
     }
+    @Override
+    public int hashCode() {
+        Integer hash = 0;
+        hash = firstNodeId + secondNodeId;
+        int counter = 10;
+        while(counter > 0) {
+            hash = (15*hash + 20)%19;
+            --counter;
+        }
+        return hash;
+    }
 }
