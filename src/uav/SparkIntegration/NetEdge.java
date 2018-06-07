@@ -55,7 +55,7 @@ public class NetEdge implements Serializable {
         hash = firstNodeId + secondNodeId;
         int counter = 10;
         while(counter > 0) {
-            hash = (15*hash + 20)%19;
+            hash = (125*hash + 345)%1000;
             --counter;
         }
         return hash;
