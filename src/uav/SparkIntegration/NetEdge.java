@@ -52,7 +52,7 @@ public class NetEdge implements Serializable {
     @Override
     public int hashCode() {
         Integer hash = 0;
-        hash = firstNodeId + secondNodeId;
+        hash = Math.abs(firstNodeId + secondNodeId);
         int counter = 10;
         int module = hash+1000;
         //Linear congruential generator
