@@ -54,9 +54,10 @@ public class NetEdge implements Serializable {
         Integer hash = 0;
         hash = firstNodeId + secondNodeId;
         int counter = 10;
+        int module = hash+1000;
         //Linear congruential generator
         while(counter > 0) {
-            hash = (125*hash + 345)%1000;
+            hash = (125*hash + 345)%module;
             --counter;
         }
         return hash;
