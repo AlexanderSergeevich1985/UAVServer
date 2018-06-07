@@ -37,4 +37,26 @@ public class NetNode implements Serializable {
         adjVertex.add(nodeId);
         adjVertexDist.add(distance);
     }
+    @Override
+    public int hashCode() {
+        return nodeId;
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj)
+            return true;
+        else if(obj == null || !(obj instanceof NetEdge))
+            return false;
+        NetNode other = (NetNode) obj;
+        if(nodeId == null || other.nodeId == null) {
+            return false;
+        }
+        else if(!(nodeId.equals(other.nodeId)) return false;
+        if(adjVertex == null || other.adjVertex == null || adjVertexDist == null || other.adjVertexDist == null) {
+            return false;
+        }
+        else if(!adjVertex.equals(other.adjVertex))
+            return false;
+        return true;
+    }
 }
