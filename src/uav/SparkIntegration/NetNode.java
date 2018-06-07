@@ -51,7 +51,7 @@ public class NetNode implements Serializable {
         if(nodeId == null || other.nodeId == null) {
             return false;
         }
-        else if(!(nodeId.equals(other.nodeId)) return false;
+        else if(!(nodeId.equals(other.nodeId))) return false;
         if(adjVertex == null || other.adjVertex == null || adjVertexDist == null || other.adjVertexDist == null) {
             return false;
         }
