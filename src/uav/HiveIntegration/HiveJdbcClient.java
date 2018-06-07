@@ -65,6 +65,12 @@ public class HiveJdbcClient {
             }
             return false;
         }
+        catch(Exception ex) {
+            if(logger.isLoggable(Level.SEVERE)) {
+                logger.log(Level.SEVERE, "Exception occur : ", ex);
+            }
+            return false;
+        }
         return true;
     }
     public void close() {
