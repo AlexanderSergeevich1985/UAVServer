@@ -18,11 +18,11 @@ public class KafkaMsgBuilder {
     public boolean hasNext() {
         return counter < fields.length ? true : false;
     }
-    public Field getFiled() {
+    public Field getField() {
         if(!fields[counter].isAccessible()) fields[counter].setAccessible(true);
         return fields[counter];
     }
-    public String getFiledName() {
+    public String getFieldName() {
         if(!fields[counter].isAccessible()) fields[counter].setAccessible(true);
         return fields[counter].getName();
     }
