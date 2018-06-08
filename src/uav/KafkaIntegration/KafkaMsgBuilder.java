@@ -49,7 +49,6 @@ public class KafkaMsgBuilder {
         T fieldValue = null;
         try {
             if(!fields[counter].isAccessible()) fields[counter].setAccessible(true);
-            Object obj = fields[counter].getClass().newInstance();
             fieldValue = (T) fields[counter].get(kafkaMsg);
             ++counter;
         }
