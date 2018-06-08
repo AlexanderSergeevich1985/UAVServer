@@ -46,11 +46,11 @@ public class KafkaMsgBuilder {
         return hasNext();
     }
     public <T> T getNext() {
-        T field = null;
+        T fieldValue = null;
         try {
             if(!fields[counter].isAccessible()) fields[counter].setAccessible(true);
             Object obj = fields[counter].getClass().newInstance();
-            field = (T) fields[counter].get(obj);
+            fieldValue = (T) fields[counter].get(kafkaMsg);
             ++counter;
         }
         catch(SecurityException ex) {
@@ -62,12 +62,12 @@ public class KafkaMsgBuilder {
         catch(Exception ex) {
             System.out.println(ex);
         }
-        return field;
+        return fieldValue;
     }
     public <T> void setFieldValue(T fieldValue) {
         try {
             if(!fields[counter].isAccessible()) fields[counter].setAccessible(true);
-            fields[counter].set(fieldValue, fieldValue);
+            fields[counter].set(kafkaMsg, fieldValue);
             ++counter;
         }
         catch(Exception ex) {
