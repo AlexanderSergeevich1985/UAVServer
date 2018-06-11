@@ -44,10 +44,10 @@ public class ProducerChannelConfig {
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KafkaMsgKryoCoder.class);
         properties.put(ProducerConfig.CLIENT_ID_CONFIG, this.clientID); //"client.id"
-        properties.put(ProducerConfig.BATCH_SIZE_CONFIG, this.batchSize);
+        properties.put(ProducerConfig.BATCH_SIZE_CONFIG, this.batchSize); //size of sending message packet
         properties.put(ProducerConfig.BUFFER_MEMORY_CONFIG, this.bufMem);
         properties.put(ProducerConfig.RETRIES_CONFIG, 0 + "");
-        properties.put(ProducerConfig.LINGER_MS_CONFIG, String.valueOf(1));
+        properties.put(ProducerConfig.LINGER_MS_CONFIG, String.valueOf(1));  //the time interval between finishing of sending packet and staring of assembling next packet
         return properties;
     }
     @Bean
