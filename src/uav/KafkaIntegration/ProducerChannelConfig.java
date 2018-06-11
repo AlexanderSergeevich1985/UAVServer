@@ -21,7 +21,7 @@ import java.util.Map;
 
 @Configuration
 @EnableKafka
-@PropertySource("classpath:Hive.properties")
+@PropertySource("classpath:Kafka.properties")
 public class ProducerChannelConfig {
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
