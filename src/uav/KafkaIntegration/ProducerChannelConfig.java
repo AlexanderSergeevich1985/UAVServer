@@ -51,17 +51,17 @@ public class ProducerChannelConfig {
         return properties;
     }
     @Bean
-    public ProducerFactory<String, String> producerFactory() {
+    public ProducerFactory<String, KafkaMsg> producerFactory() {
         return new DefaultKafkaProducerFactory<>(producerConfigs());
     }
     @Bean
-    public KafkaTemplate<String, String> kafkaTemplate() {
+    public KafkaTemplate<String, KafkaMsg> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
     @Bean
     @ServiceActivator(inputChannel = "producerChannel")
     public MessageHandler kafkaMessageHandler() {
-        KafkaProducerMessageHandler<String, String> handler = new KafkaProducerMessageHandler<>(kafkaTemplate());
+        KafkaProducerMessageHandler<String, KafkaMsg> handler = new KafkaProducerMessageHandler<>(kafkaTemplate());
         handler.setMessageKeyExpression(new LiteralExpression("kafka-integration"));
         return handler;
     }
