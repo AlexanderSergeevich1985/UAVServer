@@ -19,15 +19,15 @@ SOFTWARE.
 */
 package uav.HiveIntegration;
 
+import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@Configuration
+@Component
 @PropertySource("classpath:Hive.properties")
 public class HiveJdbcClient {
     static final String patternCS = "[/@]+([^:/@]+)([:/]+|$)";
