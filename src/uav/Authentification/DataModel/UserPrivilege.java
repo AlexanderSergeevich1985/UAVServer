@@ -12,4 +12,23 @@ public class UserPrivilege {
     private String privilegeName;
     @ManyToMany(mappedBy = "privileges")
     private Collection<UserRole> roles;
+    
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    public Integer getId() {
+        return this.id;
+    }
+    public void setPrivilegeName(String privilegeName) {
+        this.privilegeName = privilegeName;
+    }
+    public String getPrivilegeName() {
+        return this.privilegeName;
+    }
+    public void setRoles(Collection<UserRole> roles) {
+        this.roles = roles;
+    }
+    public Collection<UserRole> getRoles() {
+        return this.roles;
+    }
 }
