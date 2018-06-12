@@ -4,6 +4,7 @@ package uav.Authentification;
  */
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
