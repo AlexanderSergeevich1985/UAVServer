@@ -7,7 +7,7 @@ import java.util.Collection;
 public class UserPrivilege {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Integer id;
     @Column(name = "PRIVILEGENAME", unique = true, nullable = false)
     private String privilegeName;
     @ManyToMany(mappedBy = "privileges")
