@@ -67,6 +67,10 @@ public class UserInfo {
         public static final String USER_FIND_BY_ID = "UserInfo.findById";
         public static final String USER_FIND_BY_Phone = "UserInfo.findByTelephone";
     }
+    @Override
+    public String toString() {
+        return "UserProfile [id=" + id + ", email=" + email + "]";
+    }
 
     @Id
     @Column(name = "ID")
