@@ -80,12 +80,13 @@ public class UserInfo {
     private String firstname;
     @Column(name = "LASTNAME")
     private String lastname;
-    @Column(name = "EMAIL")
+    @Column(name = "EMAIL", unique = true, nullable = false)
     private String email;
     @Column(name = "TELEPHONE")
     private String telephone;
     @Column(name = "BIRTHDAY")
     private String birthday;
     @Column(nullable = false)
+    @Size(min = 8, max = 40)
     private String password;
 }
