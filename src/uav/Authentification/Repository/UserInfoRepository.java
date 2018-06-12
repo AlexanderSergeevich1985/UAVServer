@@ -6,4 +6,5 @@ import uav.Authentification.UserInfo;
 
 @Repository
 public interface UserInfoRepository extends JpaRepository<UserInfo, Integer> {
+    UserInfo findByEmail(String email);
 }
