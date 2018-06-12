@@ -22,4 +22,29 @@ public class UserRole {
             inverseJoinColumns = @JoinColumn(
                     name = "privilegeId", referencedColumnName = "id"))
     private Collection<UserPrivilege> privileges;
+    
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    public Integer getId() {
+        return this.id;
+    }
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+    public String getRoleName() {
+        return this.roleName;
+    }
+    public void setUsers(Collection<UserInfo> users) {
+        this.users = users;
+    }
+    public Collection<UserInfo> getUsers() {
+        return this.users;
+    }
+    public void setPrivileges(Collection<UserPrivilege> privileges) {
+        this.privileges = privileges;
+    }
+    public Collection<UserPrivilege> getPrivileges() {
+        return this.privileges;
+    }
 }
