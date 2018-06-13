@@ -1,9 +1,0 @@
-<network>
-    <join><multicast enabled="true"/> </join>
-</network>
-<services>
-<service enabled="true">
-    <name>CounterService</name>
-    <class-name>CounterService</class-name>
-</service>
-</services>
