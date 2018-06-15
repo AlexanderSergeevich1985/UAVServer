@@ -15,6 +15,8 @@ public class Coordinates {
     private Double longitude;
     @Column(name = "ELEVATION")
     private Double elevation;
+    @OneToOne(mappedBy="coordinates")
+    private IOTDevice iotDevice;
 
     public Coordinates() {}
     public Coordinates(Integer id, Double latitude, Double longitude, Double elevation) {
