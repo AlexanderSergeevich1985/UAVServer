@@ -1,4 +1,4 @@
-package uav.WebSocketIntegration;
+package uav.WebSocketIntegration.message;
 
 import javax.persistence.*;
 
