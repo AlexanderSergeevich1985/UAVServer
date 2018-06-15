@@ -49,6 +49,12 @@ public class Coordinates {
     public Double getElevation() {
         return this.elevation;
     }
+    public void setIOTDevice(IOTDevice iotDevice) {
+        this.iotDevice = iotDevice;
+    }
+    public IOTDevice getIOTDevice() {
+        return this.iotDevice;
+    }
     @Override
     public String toString() {
         return "Location [id=" + id + ", latitude=" + latitude + ", longitude=" + longitude + ", elevation=" + elevation + "]";
