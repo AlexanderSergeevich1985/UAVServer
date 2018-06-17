@@ -1,6 +1,7 @@
 package uav.WebSocketIntegration.message;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 public class MsgHeader implements Serializable {
     private String messageId;
@@ -25,7 +26,10 @@ public class MsgHeader implements Serializable {
     public void setBodySize(long bodySize) { this.bodySize = bodySize; }
     public long getBodySize() { return this.bodySize; }
     public void setDeviceUID(String deviceUID) {
-        this.deviceUID = deviceUID;
+        if(!deviceUID.isEmpty())
+            this.deviceUID = deviceUID;
+        else
+            this.deviceUID = UUID.randomUUID().toString();
     }
     public String getDeviceUID() {
         return this.deviceUID;
