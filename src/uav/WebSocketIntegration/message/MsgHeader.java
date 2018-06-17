@@ -34,4 +34,9 @@ public class MsgHeader implements Serializable {
     public String getDeviceUID() {
         return this.deviceUID;
     }
+    @Override
+    public String toString() {
+        return "Message header [id=" + messageId + ", type=" + messageType + ", timestamp=" + timestamp +
+                ", body size=" + bodySize + ", device UUID" + deviceUID +"]";
+    }
 }
