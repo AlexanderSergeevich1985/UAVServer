@@ -16,6 +16,7 @@ public class MsgHeaderTypeAdapter extends TypeAdapter<MsgHeader> {
         out.name("timestamp").value(msg.getTimeStamp());
         out.name("bodySize").value(msg.getBodySize());
         out.name("deviceUID").value(msg.getDeviceUID());
+        out.endObject();
     }
     @Override
     public MsgHeader read(JsonReader in) throws IOException {
