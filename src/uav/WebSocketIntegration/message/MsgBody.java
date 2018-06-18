@@ -5,9 +5,21 @@ import java.util.HashMap;
 
 public class MsgBody implements Serializable {
     private int counter = 0;
-    private MsgBodyField field;
+    private MsgBodyField first_field;
+    private MsgBodyField end_field;
     private transient HashMap<String, MsgBodyField> fields;
-
+    
+    public void addFiled(MsgBodyField field) {
+        if(first_field == null) {
+            first_field = field;
+            end_field = field;
+            fields.put(field.getName(), field);
+            return;
+        }
+        fields.put(field.getName(), field);
+        this.end_field.setNextField(field);
+        this.end_field = field;
+    }
     protected class MsgBodyField<T> implements Serializable {
         private String name;
         private String type;
