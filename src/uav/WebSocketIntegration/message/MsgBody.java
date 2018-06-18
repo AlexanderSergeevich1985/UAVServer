@@ -8,7 +8,7 @@ public class MsgBody implements Serializable {
     private MsgBodyField end_field = null;
     private transient HashMap<String, MsgBodyField> fields = new HashMap<>();
     
-    public void addFiled(MsgBodyField field) {
+    public void addField(MsgBodyField field) {
         if(first_field == null) {
             first_field = field;
             end_field = field;
@@ -18,6 +18,15 @@ public class MsgBody implements Serializable {
         fields.put(field.getName(), field);
         this.end_field.setNextField(field);
         this.end_field = field;
+    }
+    public HashMap<String, MsgBodyField> getFields() {
+        return this.fields;
+    }
+    public MsgBodyField getFirst_field() {
+        return this.first_field;
+    }
+    public MsgBodyField getEnd_field() {
+        return this.end_field;
     }
     protected class MsgBodyField<T> implements Serializable {
         private String name;
