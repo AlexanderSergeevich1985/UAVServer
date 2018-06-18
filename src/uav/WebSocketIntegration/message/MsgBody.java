@@ -4,10 +4,9 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 public class MsgBody implements Serializable {
-    private int counter = 0;
-    private MsgBodyField first_field;
-    private MsgBodyField end_field;
-    private transient HashMap<String, MsgBodyField> fields;
+    private MsgBodyField first_field = null;
+    private MsgBodyField end_field = null;
+    private transient HashMap<String, MsgBodyField> fields = new HashMap<>();
     
     public void addFiled(MsgBodyField field) {
         if(first_field == null) {
