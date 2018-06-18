@@ -27,24 +27,27 @@ import java.lang.reflect.Type;
 
 public class MsgBodyJsonSerializer implements JsonSerializer<MsgBody> {
     @Override
-    public JsonElement serialize(MsgBody msg, Type typeOfSrc, JsonSerializationContext context) {
+    public JsonElement serialize(MsgBody msg, Type type, JsonSerializationContext context) {
         JsonObject result = new JsonObject();
         msg.getFields().forEach((key, field) -> {
             Object value = field.getValue();
+            StringBuilder name = new StringBuilder(key);
+            name.append("_");
+            name.append(field.getType());
             if(value instanceof String) {
-                result.addProperty(key, (String) value);
+                result.addProperty(name.toString(), (String) value);
             }
             else if(value instanceof Number) {
-                result.addProperty(key, (Number) value);
+                result.addProperty(name.toString(), (Number) value);
             }
             else if(value instanceof Boolean) {
-                result.addProperty(key, (Boolean) value);
+                result.addProperty(name.toString(), (Boolean) value);
             }
             else if(value instanceof Character) {
-                result.addProperty(key, (Character) value);
+                result.addProperty(name.toString(), (Character) value);
             }
             else {
-                result.addProperty(key, value.toString());
+                result.addProperty(name.toString(), value.toString());
             }
         });
         return result;
