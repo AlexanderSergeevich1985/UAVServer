@@ -23,7 +23,7 @@ import java.util.HashMap;
 
 public class MsgBody implements Serializable {
     private MsgBodyField first_field = null;
-    private MsgBodyField end_field = null;
+    private transient MsgBodyField end_field = null;
     private transient HashMap<String, MsgBodyField> fields = new HashMap<>();
     
     public void addField(MsgBodyField field) {
