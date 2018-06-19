@@ -27,6 +27,7 @@ public class NetEdge implements Serializable {
     private Integer secondNodeId;
     private Double distance;
     private String state;
+    private int hash;
 
     public NetEdge(Integer firstNodeId_, Integer secondNodeId_, Double distance_) {
         this.firstNodeId = firstNodeId_;
@@ -66,14 +67,15 @@ public class NetEdge implements Serializable {
     }
     @Override
     public int hashCode() {
-        Integer hash = 0;
-        hash = Math.abs(firstNodeId + secondNodeId);
-        int counter = 10;
-        int module = hash+1000;
-        //Linear congruential generator
-        while(counter > 0) {
-            hash = (125*hash + 345)%module;
-            --counter;
+        if(hash == 0) {
+            hash = Math.abs(firstNodeId + secondNodeId);
+            int counter = 10;
+            int module = hash+1000;
+            //Linear congruential generator
+            while(counter > 0) {
+                hash = (125*hash + 345)%module;
+                --counter;
+            }
         }
         return hash;
     }
