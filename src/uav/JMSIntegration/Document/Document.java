@@ -1,7 +1,7 @@
 package uav.JMSIntegration.Document;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Locale;
@@ -16,11 +16,11 @@ public abstract class Document implements Serializable {
     private Conditions conditions;
 
     Document() {
-        this.creation_time = LocalDateTime.now().format(formatter);
+        this.creation_time = ZonedDateTime.now().format(formatter);
     }
     Document(String class_name) {
         this.class_name = class_name;
-        this.creation_time = LocalDateTime.now().format(formatter);
+        this.creation_time = ZonedDateTime.now().format(formatter);
     }
     public void setClass_name(String class_name) {
         this.class_name = class_name;
@@ -34,7 +34,7 @@ public abstract class Document implements Serializable {
     public Conditions getConditions() {
         return this.conditions;
     }
-    public void setLast_modification_time(LocalDateTime last_modification_time) {
+    public void setLast_modification_time(ZonedDateTime last_modification_time) {
         this.last_modification_time = last_modification_time.format(formatter);
     }
     public String getLast_modification_time() {
