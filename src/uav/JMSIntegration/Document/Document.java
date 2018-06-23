@@ -1,4 +1,4 @@
-package uav.JMSIntegration;
+package uav.JMSIntegration.Document;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
