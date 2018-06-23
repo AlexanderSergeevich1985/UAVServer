@@ -15,7 +15,6 @@ public abstract class Document implements Serializable {
     private String last_modification_time;
     private Conditions conditions;
 
-
     Document() {
         this.creation_time = LocalDateTime.now().format(formatter);
     }
