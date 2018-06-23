@@ -88,6 +88,7 @@ public class MsgListener implements MessageListener {
         String class_name = (String) msg.getString("class_name");
         Class docClass = Class.forName(class_name);
         Document document = (Document) docClass.newInstance();
+        document.setClass_name(class_name);
         Enumeration names = msg.getMapNames();
         while(names.hasMoreElements()) {
             String name = (String) names.nextElement();
