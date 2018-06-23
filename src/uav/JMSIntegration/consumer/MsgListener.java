@@ -1,4 +1,4 @@
-package uav.JMSIntegration;
+package uav.JMSIntegration.consumer;
 
 import org.springframework.stereotype.Component;
 
