@@ -43,6 +43,8 @@ public class DocumentSystem {
     private ExecutorService executor = Executors.newCachedThreadPool();
     private InitialContext ctx;
     private ReentrantLock ctx_locker = new ReentrantLock();
+    private ReadWriteLock arxive_locker = new ReentrantReadWriteLock();
+    private Map<String, Document> arxive = new HashMap<>();
 
     public DocumentSystem() {
         try {
