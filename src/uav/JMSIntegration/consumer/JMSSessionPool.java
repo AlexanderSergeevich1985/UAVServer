@@ -17,6 +17,8 @@ public class JMSSessionPool implements ServerSessionPool, ExceptionListener {
 
     private final TopicConnection connToTopic;
     private String topicName = "";
+    private Topic topic;
+    private ConnectionConsumer connConsumer;
 
     private AtomicInteger sessionCount = new AtomicInteger(0);
     private ConcurrentSkipListMap<Integer, JMSSession> sessions = new ConcurrentSkipListMap<>();
@@ -35,6 +37,12 @@ public class JMSSessionPool implements ServerSessionPool, ExceptionListener {
     }
     public String getTopicName() {
         return this.topicName;
+    }
+    public void setConnConsumer(ConnectionConsumer connConsumer) {
+        this.connConsumer = connConsumer;
+    }
+    public void setTopic(Topic topic) {
+        this.topic = topic;
     }
     public ServerSession createNewServerSession() {
         Integer sessionId = sessionCount.incrementAndGet();
