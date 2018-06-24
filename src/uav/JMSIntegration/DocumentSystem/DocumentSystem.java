@@ -120,6 +120,12 @@ public class DocumentSystem {
         });
         executor.shutdown();
     }
+    public void arxiveDocument(String topicName, Document document) {
+        arxive_locker.writeLock().lock();
+        arxive.put(topicName, document);
+        arxive_locker.writeLock().unlock();
+    }
+    
     public class PostPublisher implements Runnable {
         private Logger logger;
         private Integer threadId;
