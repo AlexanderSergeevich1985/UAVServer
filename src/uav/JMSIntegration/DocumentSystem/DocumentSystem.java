@@ -160,7 +160,7 @@ public class DocumentSystem {
             }
         }
         public void setSession(TopicSession session, Topic topic) {
-            if(session == null) return;
+            if(session == null || topic == null) return;
             this.session = session;
             try {
                 publisher = session.createPublisher(topic);
