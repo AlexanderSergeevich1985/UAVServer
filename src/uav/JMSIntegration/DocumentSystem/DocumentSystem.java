@@ -1,10 +1,8 @@
 package uav.JMSIntegration.DocumentSystem;
 
-import org.jvnet.hk2.annotations.Service;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 import uav.JMSIntegration.Document.Document;
-import uav.JMSIntegration.consumer.MsgListener;
+import uav.JMSIntegration.consumer.JMSSessionPool;
 
 import javax.jms.*;
 import javax.naming.InitialContext;
@@ -22,9 +20,8 @@ public class DocumentSystem {
     private static Logger logger = Logger.getLogger(DocumentSystem.class.getName());
 
     private AtomicInteger threadCount = new AtomicInteger(0);
-    private ConcurrentSkipListMap<String, MsgListener> topics = new ConcurrentSkipListMap<>();
+    private ConcurrentSkipListMap<String, JMSSessionPool> topics = new ConcurrentSkipListMap<>();
     private ConcurrentSkipListMap<Integer, PostPublisher> publishers = new ConcurrentSkipListMap<>();
-    private ConcurrentSkipListMap<String, TopicConnection> connections = new ConcurrentSkipListMap<>();
     private ExecutorService executor = Executors.newCachedThreadPool();
     private InitialContext ctx;
     private ReentrantLock ctx_locker = new ReentrantLock();
@@ -39,21 +36,44 @@ public class DocumentSystem {
             }
         }
     }
-
     public void setCtx(InitialContext ctx) {
         this.ctx = ctx;
     }
-    public void registerListener(MsgListener listener) {
-        topics.putIfAbsent(listener.getConsumerName(), listener);
+    public Boolean createConToTopic(String topicName, String conFactName) {
+        if(topics.containsKey(topicName)) return true;
+        try {
+            Topic topic = (Topic) this.ctx.lookup(topicName);
+            TopicConnectionFactory connFactory = (TopicConnectionFactory) ctx.lookup(conFactName);
+            TopicConnection topicConn = connFactory.createTopicConnection();
+            JMSSessionPool sessionPool = new JMSSessionPool(topicConn);
+            topicConn.setExceptionListener(sessionPool);
+            sessionPool.setTopic(topic);
+            sessionPool.setConnConsumer(topicConn.createConnectionConsumer(topic, null, sessionPool, 10));
+            topics.put(topicName, sessionPool);
+            topicConn.start();
+        }
+        catch(NamingException nex) {
+            if(this.logger.isLoggable(Level.SEVERE)) {
+                this.logger.log(Level.SEVERE, "NamingException occur : ", nex);
+            }
+            return false;
+        }
+        catch (JMSException jmex) {
+            if(this.logger.isLoggable(Level.SEVERE)) {
+                this.logger.log(Level.SEVERE, "JMSException occur : ", jmex);
+            }
+            return false;
+        }
+        return true;
     }
     public void addPostPublisher(String topicId) {
-        if(!connections.containsKey(topicId)) return;
+        if(!topics.containsKey(topicId)) return;
         PostPublisher postPublisher = new PostPublisher(threadCount.incrementAndGet());
         publishers.put(postPublisher.getThreadId(), postPublisher);
         try {
             ctx_locker.lock();
-            TopicSession session = connections.get(topicId).createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
-            postPublisher.setSession(session, (Topic) ctx.lookup("topic/".concat(topicId)));
+            TopicSession session = topics.get(topicId).getConnToTopic().createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
+            postPublisher.setSession(session, (Topic) ctx.lookup(topicId));
             ctx_locker.unlock();
         }
         catch(NamingException nex) {
