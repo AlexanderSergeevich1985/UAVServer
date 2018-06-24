@@ -125,6 +125,10 @@ public class DocumentSystem {
         arxive.put(topicName, document);
         arxive_locker.writeLock().unlock();
     }
+    public void sendDocument(Integer publisherId, Document document) {
+        if(!publishers.containsKey(publisherId)) return;
+        publishers.get(publisherId).setDocument(document);
+    }
     
     public class PostPublisher implements Runnable {
         private Logger logger;
