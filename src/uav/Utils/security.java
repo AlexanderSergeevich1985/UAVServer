@@ -18,9 +18,7 @@ SOFTWARE.
 */
 package uav.Utils;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -28,8 +26,13 @@ import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.Base64;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class security {
+    private static final Logger logger = Logger.getLogger(security.class.getName());
+
     static public KeyPair generate_RSA() {
         KeyPair keyPair = null;
         try {
@@ -39,35 +42,63 @@ public class security {
             PublicKey pub = keyPair.getPublic();
             Key pvt = keyPair.getPrivate();
         }
-        catch(NoSuchAlgorithmException nsaex) {}
+        catch(NoSuchAlgorithmException nsaex) {
+            if(logger.isLoggable(Level.SEVERE)) {
+                logger.log(Level.SEVERE, "NoSuchAlgorithmException occur : ", nsaex);
+            }
+        }
         return keyPair;
     }
     static public void writeKey(String fileName, Key key) {
-        try {
-            FileOutputStream out = new FileOutputStream(fileName);
+        try(FileOutputStream out = new FileOutputStream(fileName)) {
             out.write(key.getEncoded());
-            out.close();
         }
-        catch(FileNotFoundException fnfex) {}
-        catch(IOException ioex) {}
+        catch(FileNotFoundException fnfex) {
+            if(logger.isLoggable(Level.SEVERE)) {
+                logger.log(Level.SEVERE, "FileNotFoundException occur : ", fnfex);
+            }
+        }
+        catch(IOException ioex) {
+            if(logger.isLoggable(Level.SEVERE)) {
+                logger.log(Level.SEVERE, "IOException occur : ", ioex);
+            }
+        }
     }
-    static public void writePublicKeyAsText(String fileName, PublicKey key) {
-        try {
-            FileOutputStream out = new FileOutputStream(fileName);
-            out.write(key.getEncoded());
-            out.close();
+    static public void writePublicKeyAsText(String fileName, PublicKey publicKey) {
+        try(Writer out = new FileWriter(fileName)) {
+            Base64.Encoder encoder = Base64.getEncoder();
+            out.write("-----BEGIN RSA PUBLIC KEY-----\n");
+            out.write(encoder.encodeToString(publicKey.getEncoded()));
+            out.write("\n-----END RSA PUBLIC KEY-----\n");
         }
-        catch(FileNotFoundException fnfex) {}
-        catch(IOException ioex) {}
+        catch(FileNotFoundException fnfex) {
+            if(logger.isLoggable(Level.SEVERE)) {
+                logger.log(Level.SEVERE, "FileNotFoundException occur : ", fnfex);
+            }
+        }
+        catch(IOException ioex) {
+            if(logger.isLoggable(Level.SEVERE)) {
+                logger.log(Level.SEVERE, "IOException occur : ", ioex);
+            }
+        }
     }
     static public void writePrivateKeyAsText(String fileName, PrivateKey key) {
-        try {
-            FileOutputStream out = new FileOutputStream(fileName);
-            out.write(key.getEncoded());
-            out.close();
+        try(Writer out = new FileWriter(fileName)) {
+            Base64.Encoder encoder = Base64.getEncoder();
+            out.write("-----BEGIN RSA PRIVATE KEY-----\n");
+            out.write(encoder.encodeToString(key.getEncoded()));
+            out.write("\n-----END RSA PRIVATE KEY-----\n");
         }
-        catch(FileNotFoundException fnfex) {}
-        catch(IOException ioex) {}
+        catch(FileNotFoundException fnfex) {
+            if(logger.isLoggable(Level.SEVERE)) {
+                logger.log(Level.SEVERE, "FileNotFoundException occur : ", fnfex);
+            }
+        }
+        catch(IOException ioex) {
+            if(logger.isLoggable(Level.SEVERE)) {
+                logger.log(Level.SEVERE, "IOException occur : ", ioex);
+            }
+        }
     }
     static public PrivateKey loadPrivatekey(String fileName) {
         Path path = Paths.get(fileName);
@@ -78,9 +109,21 @@ public class security {
             KeyFactory keyf = KeyFactory.getInstance("RSA");
             key = keyf.generatePrivate(pkcs8ks);
         }
-        catch(IOException ioex) {}
-        catch(NoSuchAlgorithmException nsaex) {}
-        catch(InvalidKeySpecException ikspex) {}
+        catch(IOException ioex) {
+            if(logger.isLoggable(Level.SEVERE)) {
+                logger.log(Level.SEVERE, "IOException occur : ", ioex);
+            }
+        }
+        catch(NoSuchAlgorithmException nsaex) {
+            if(logger.isLoggable(Level.SEVERE)) {
+                logger.log(Level.SEVERE, "NoSuchAlgorithmException occur : ", nsaex);
+            }
+        }
+        catch(InvalidKeySpecException ikspex) {
+            if(logger.isLoggable(Level.SEVERE)) {
+                logger.log(Level.SEVERE, "InvalidKeySpecException occur : ", ikspex);
+            }
+        }
         return key;
     }
     static public PublicKey loadPublickey(String fileName) {
@@ -92,9 +135,21 @@ public class security {
             KeyFactory keyf = KeyFactory.getInstance("RSA");
             key = keyf.generatePublic(x509eks);
         }
-        catch(IOException ioex) {}
-        catch(NoSuchAlgorithmException nsaex) {}
-        catch(InvalidKeySpecException ikspex) {}
+        catch(IOException ioex) {
+            if(logger.isLoggable(Level.SEVERE)) {
+                logger.log(Level.SEVERE, "IOException occur : ", ioex);
+            }
+        }
+        catch(NoSuchAlgorithmException nsaex) {
+            if(logger.isLoggable(Level.SEVERE)) {
+                logger.log(Level.SEVERE, "NoSuchAlgorithmException occur : ", nsaex);
+            }
+        }
+        catch(InvalidKeySpecException ikspex) {
+            if(logger.isLoggable(Level.SEVERE)) {
+                logger.log(Level.SEVERE, "InvalidKeySpecException occur : ", ikspex);
+            }
+        }
         return key;
     }
 }
