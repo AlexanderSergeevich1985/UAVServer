@@ -29,7 +29,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
-public class Utils {
+public class security {
     static public KeyPair generate_RSA() {
         KeyPair keyPair = null;
         try {
