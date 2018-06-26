@@ -34,6 +34,17 @@ import java.util.logging.Logger;
 public class security {
     private static final Logger logger = Logger.getLogger(security.class.getName());
     
+    static public byte[] serializeObject(Object obj) throws IOException {
+        byte[] bytes = null;
+        try(ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(baos)
+        ) {
+            oos.writeObject(obj);
+            oos.flush();
+            bytes = baos.toByteArray();
+        }
+        return bytes;
+    }
     static public byte[] signMessage(String msg, PrivateKey key) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
         return signMessage(msg.getBytes(), key);
     }
