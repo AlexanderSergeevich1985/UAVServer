@@ -19,6 +19,7 @@ SOFTWARE.
 package uav.Utils;
 
 import java.io.*;
+import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -32,7 +33,19 @@ import java.util.logging.Logger;
 
 public class security {
     private static final Logger logger = Logger.getLogger(security.class.getName());
-
+    
+    static public byte[] signMessage(String msg, PrivateKey key) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
+        return signMessage(msg.getBytes(), key);
+    }
+    static public byte[] signMessage(ByteBuffer msg, PrivateKey key) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
+        return signMessage(msg.array(), key);
+    }
+    static public byte[] signMessage(byte[] msg, PrivateKey key) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
+        Signature rsa = Signature.getInstance("SHA1withRSA");
+        rsa.initSign(key);
+        rsa.update(msg);
+        return rsa.sign();
+    }
     static public KeyPair generate_RSA() {
         KeyPair keyPair = null;
         try {
