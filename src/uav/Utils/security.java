@@ -57,6 +57,15 @@ public class security {
         rsa.update(msg);
         return rsa.sign();
     }
+    static public boolean verifySignature(ByteBuffer signToVerify, ByteBuffer signedData, final PublicKey key, String algorithmName) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
+        return verifySignature(signToVerify.array(), signedData.array(), key, algorithmName);
+    }
+    static public boolean verifySignature(final byte[] signToVerify, final byte[] signedData, final PublicKey key, String algorithmName) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
+        Signature sign = Signature.getInstance(algorithmName);
+        sign.initVerify(key);
+        sign.update(signedData);
+        return sign.verify(signToVerify);
+    }
     static public KeyPair generate_RSA() {
         KeyPair keyPair = null;
         try {
