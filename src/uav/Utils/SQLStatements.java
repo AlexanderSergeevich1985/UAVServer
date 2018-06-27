@@ -76,6 +76,28 @@ public class SQLStatements {
         return String.format("ALTER TABLE %s ADD %s %s;", tableName, columnName, dataType);
     }
     
+    static public String alterTable(String tableName, String columnName, String dataType, String vendor) {
+        String result = null;
+        switch(vendor) {
+            case "MSAccess": case "SQLSever":
+                result = String.format("ALTER TABLE %s ALTER COLUMN %s %s;", tableName, columnName, dataType);
+                break;
+            case "MySQL": case "Oracle":
+                result = String.format("ALTER TABLE %s MODIFY COLUMN %s %s;", tableName, columnName, dataType);
+                break;
+            case "Oracle10G+":
+                result = String.format("ALTER TABLE %s MODIFY %s %s;", tableName, columnName, dataType);
+                break;
+            case "":
+                break;
+        }
+        return result;
+    }
+    
+    static public String alterTable(String tableName, String columnName) {
+        return String.format("ALTER TABLE %s DROP COLUMN %s;", tableName, columnName);
+    }
+    
     static public String insertIntoTable(String tableName, List<String> columnNames, List<String> columnValues) {
         if(columnNames == null || columnValues == null || columnNames.size() != columnValues.size()) return null;
         StringBuilder builderColumns = new StringBuilder("(");
@@ -94,7 +116,6 @@ public class SQLStatements {
         builderValues.append(")");
         return String.format("INSERT INTO %s %s VALUES %s;", tableName, builderColumns.toString(), builderValues.toString());
     }
-
     
     static public String updateTable(String tableName, String columnName, String newValue, String conditions) {
         return String.format("UPDATE %s SET %s = %s WHERE %s;", tableName, columnName, newValue, conditions);
