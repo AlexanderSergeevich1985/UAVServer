@@ -79,4 +79,8 @@ public class SQLStatements {
     static public String selectWithLike(String whatSelect, String tableName, String columnName, String pattern) {
         return String.format("SELECT %s FROM %s WHERE %s LIKE %s;", whatSelect, tableName, columnName, pattern);
     }
+    
+    static public String selectDistinct(String whatSelect, String tableName) {
+        return String.format("SELECT %s FROM %s;", whatSelect, tableName);
+    }
 }
