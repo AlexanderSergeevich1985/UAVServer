@@ -117,6 +117,10 @@ public class SQLStatements {
         return (order == null && !order.isEmpty() && (order.equals("ASC") || order.equals("DESC"))) ? String.format("SELECT %s FROM %s ORDER BY %s %s;", whatSelect, tableName, columnNames, order) : String.format("SELECT %s FROM %s ORDER BY %s;", whatSelect, tableName, columnNames);
     }
     
+    static public String selectWithHaving(String whatSelect, String tableName, String condition, String columnNames, String condition2, String orderColumns) {
+        return String.format("SELECT %s FROM %s WHERE %s GROUP BY %s HAVING %s ORDER BY %s;", whatSelect, tableName, condition, columnNames, condition2, orderColumns);
+    }
+    
     static public String selectDistinct(String whatSelect, String tableName) {
         return String.format("SELECT %s FROM %s;", whatSelect, tableName);
     }
