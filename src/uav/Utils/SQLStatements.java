@@ -124,4 +124,8 @@ public class SQLStatements {
     static public String selectDistinct(String whatSelect, String tableName) {
         return String.format("SELECT %s FROM %s;", whatSelect, tableName);
     }
+    
+    static public String selectWithUnion(String whatSelect, String tableName, String whatSelect2, String tableName2) {
+        return String.format("SELECT %s FROM %s UNION SELECT %s FROM %s;", whatSelect, tableName, whatSelect2, tableName2);
+    }
 }
