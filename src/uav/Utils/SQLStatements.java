@@ -24,22 +24,6 @@ import java.util.Map;
 
 public class SQLStatements {
     
-    static public String createTable(String tableName, LinkedHashMap<String, String> columns) {
-        StringBuilder builder = new StringBuilder("CREATE TABLE ");
-        builder.append(tableName);
-        builder.append(" (");
-        int counter = columns.size();
-        for(Map.Entry<String, String> entry: columns.entrySet()) {
-            if(counter > 1)
-                builder.append(entry.getKey().concat(" ")).append(entry.getValue().concat(", "));
-            else
-                builder.append(entry.getKey().concat(" ")).append(entry.getValue());
-            --counter;
-        }
-        builder.append(");");
-        return builder.toString();
-    }
-    
     static public String storedProcedure(String procedureName, String sqlStatement) {
         return String.format("CREATE PROCEDURE %s AS %s;", procedureName, sqlStatement);
     }
@@ -62,6 +46,22 @@ public class SQLStatements {
     
     static public String dropDatabase(String databaseName) {
         return String.format("DROP DATABASE %s;", databaseName);
+    }
+    
+    static public String createTable(String tableName, LinkedHashMap<String, String> columns) {
+        StringBuilder builder = new StringBuilder("CREATE TABLE ");
+        builder.append(tableName);
+        builder.append(" (");
+        int counter = columns.size();
+        for(Map.Entry<String, String> entry: columns.entrySet()) {
+            if(counter > 1)
+                builder.append(entry.getKey().concat(" ")).append(entry.getValue().concat(", "));
+            else
+                builder.append(entry.getKey().concat(" ")).append(entry.getValue());
+            --counter;
+        }
+        builder.append(");");
+        return builder.toString();
     }
     
     static public String dropTable(String tableName) {
