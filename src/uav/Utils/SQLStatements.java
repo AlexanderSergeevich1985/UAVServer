@@ -104,6 +104,10 @@ public class SQLStatements {
         return String.format("CREATE UNIQUE INDEX %s ON %s %s;", indexName, tableName, columnNames);
     }
     
+    static public String dropIndex(String indexName) {
+        return String.format("DROP INDEX %s;", indexName);
+    }
+    
     static public String dropIndex(String tableName, String indexName, String vendor) {
         String result = null;
         switch(vendor) {
