@@ -44,6 +44,26 @@ public class SQLStatements {
         return String.format("ALTER TABLE %s ADD %s %s;", tableName, columnName, dataType);
     }
     
+    static public String insertIntoTable(String tableName, List<String> columnNames, List<String> columnValues) {
+        if(columnNames == null || columnValues == null || columnNames.size() != columnValues.size()) return null;
+        StringBuilder builderColumns = new StringBuilder("(");
+        StringBuilder builderValues = new StringBuilder("(");
+        Iterator<String> cni = columnNames.iterator();
+        Iterator<String> cvi = columnValues.iterator();
+        while(cni.hasNext() && cvi.hasNext()) {
+            builderColumns.append(cni.next());
+            builderValues.append(cvi.next());
+            if(cni.hasNext()) {
+                builderColumns.append(", ");
+                builderValues.append(", ");
+            }
+        }
+        builderColumns.append(") ");
+        builderValues.append(")");
+        return String.format("INSERT INTO %s %s VALUES %s;", tableName, builderColumns.toString(), builderValues.toString());
+    }
+
+    
     static public String updateTable(String tableName, String columnName, String newValue, String conditions) {
         return String.format("UPDATE %s SET %s = %s WHERE %s;", tableName, columnName, newValue, conditions);
     }
