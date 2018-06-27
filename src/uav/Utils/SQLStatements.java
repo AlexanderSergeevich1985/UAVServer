@@ -47,7 +47,11 @@ public class SQLStatements {
     static public String updateTable(String tableName, String columnName, String newValue, String conditions) {
         return String.format("UPDATE %s SET %s = %s WHERE %s;", tableName, columnName, newValue, conditions);
     }
-
+    
+    static public String deleteRecords(String tableName, String conditions) {
+        return String.format("DELETE FROM %s WHERE %s;", tableName, conditions);
+    }
+    
     static public String columnAvg(String columnName, String tableName) {
         return String.format("SELECT AVG(%s) FROM %s;", columnName, tableName);
     }
