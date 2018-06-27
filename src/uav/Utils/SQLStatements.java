@@ -35,6 +35,10 @@ public class SQLStatements {
     static public String alterTable(String tableName, String columnName, String dataType) {
         return String.format("ALTER TABLE %s ADD %s %s;", tableName, columnName, dataType);
     }
+    
+    static public String updateTable(String tableName, String columnName, String newValue, String conditions) {
+        return String.format("UPDATE %s SET %s = %s WHERE %s;", tableName, columnName, newValue, conditions);
+    }
 
     static public String columnAvg(String columnName, String tableName) {
         return String.format("SELECT AVG(%s) FROM %s;", columnName, tableName);
@@ -52,5 +56,3 @@ public class SQLStatements {
         return String.format("SELECT %s FROM %s WHERE %s BETWEEN %s AND %s;", whatSelect, tableName, columnName, fValue, sValue);
     }
 }
-
-
