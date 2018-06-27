@@ -94,7 +94,7 @@ public class SQLStatements {
     }
     
     static public String selectWithOrderBY(String whatSelect, String tableName, String columnNames, String order) {
-        return (order == null && !order.isEmpty() && (order.equals("ASC") || order.equals("DESC"))) ? String.format("SELECT %s FROM %s ORDER BY %s;", whatSelect, tableName, columnNames) : String.format("SELECT %s FROM %s ORDER BY %s %s;", whatSelect, tableName, columnNames, order);
+        return (order == null && !order.isEmpty() && (order.equals("ASC") || order.equals("DESC"))) ? String.format("SELECT %s FROM %s ORDER BY %s %s;", whatSelect, tableName, columnNames, order) : String.format("SELECT %s FROM %s ORDER BY %s;", whatSelect, tableName, columnNames);
     }
     
     static public String selectDistinct(String whatSelect, String tableName) {
