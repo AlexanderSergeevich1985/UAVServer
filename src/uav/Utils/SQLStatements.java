@@ -48,8 +48,12 @@ public class SQLStatements {
         return String.format("EXEC %s;", procedureName);
     }
     
+    static public String wrapStatement(String sqlStatement) {
+        return String.format("( %s )", sqlStatement);
+    }
+    
     static public String wrapStatementAS(String sqlStatement, String alias) {
-        return String.format("( %s ) AS %s;", sqlStatement, alias);
+        return String.format("( %s ) AS %s", sqlStatement, alias);
     }
     
     static public String alterTable(String tableName, String columnName, String dataType) {
