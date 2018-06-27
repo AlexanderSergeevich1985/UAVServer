@@ -52,6 +52,14 @@ public class SQLStatements {
         return String.format("DELETE FROM %s WHERE %s;", tableName, conditions);
     }
     
+    static public String columnSum(String columnName, String tableName, String conditions) {
+        StringBuilder strBuilder = new StringBuilder(String.format("SELECT SUM(%s) FROM %s", columnName, tableName));
+        if(conditions == null || conditions.isEmpty()) {
+            return strBuilder.append(";").toString();
+        }
+        return strBuilder.append(" WHERE ".concat(conditions)).append(";").toString();
+    }
+    
     static public String columnAvg(String columnName, String tableName) {
         return String.format("SELECT AVG(%s) FROM %s;", columnName, tableName);
     }
