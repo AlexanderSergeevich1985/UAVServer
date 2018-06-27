@@ -88,8 +88,6 @@ public class SQLStatements {
             case "Oracle10G+":
                 result = String.format("ALTER TABLE %s MODIFY %s %s;", tableName, columnName, dataType);
                 break;
-            case "":
-                break;
         }
         return result;
     }
@@ -104,6 +102,22 @@ public class SQLStatements {
     
     static public String createUniqueIndex(String tableName, String indexName, String columnNames) {
         return String.format("CREATE UNIQUE INDEX %s ON %s %s;", indexName, tableName, columnNames);
+    }
+    
+    static public String dropIndex(String tableName, String indexName, String vendor) {
+        String result = null;
+        switch(vendor) {
+            case "MSAccess":
+                result = String.format("DROP INDEX %s ON %s;", indexName, tableName);
+                break;
+            case "SQLSever":
+                result = String.format("DROP INDEX %s.%s;", tableName, indexName);
+                break;
+            case "MySQL":
+                result = String.format("ALTER TABLE %s DROP INDEX %s;", tableName, indexName);
+                break;
+        }
+        return result;
     }
     
     static public String insertIntoTable(String tableName, List<String> columnNames, List<String> columnValues) {
