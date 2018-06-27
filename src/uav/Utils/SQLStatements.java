@@ -93,6 +93,10 @@ public class SQLStatements {
         return builder.toString();
     }
     
+    static public String selectWithOrderBY(String whatSelect, String tableName, String columnNames, String order) {
+        return (order == null && !order.isEmpty() && (order.equals("ASC") || order.equals("DESC"))) ? String.format("SELECT %s FROM %s ORDER BY %s;", whatSelect, tableName, columnNames) : String.format("SELECT %s FROM %s ORDER BY %s %s;", whatSelect, tableName, columnNames, order);
+    }
+    
     static public String selectDistinct(String whatSelect, String tableName) {
         return String.format("SELECT %s FROM %s;", whatSelect, tableName);
     }
