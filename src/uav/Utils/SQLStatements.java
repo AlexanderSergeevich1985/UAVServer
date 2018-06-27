@@ -64,6 +64,14 @@ public class SQLStatements {
         return String.format("DROP DATABASE %s;", databaseName);
     }
     
+    static public String dropTable(String tableName) {
+        return String.format("DROP TABLE %s;", tableName);
+    }
+
+    static public String truncateTable(String tableName) {
+        return String.format("TRUNCATE TABLE %s;", tableName);
+    }
+    
     static public String alterTable(String tableName, String columnName, String dataType) {
         return String.format("ALTER TABLE %s ADD %s %s;", tableName, columnName, dataType);
     }
