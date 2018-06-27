@@ -20,6 +20,7 @@ package uav.Utils;
 
 import org.antlr.stringtemplate.StringTemplate;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class SQLStatements {
     
@@ -27,7 +28,14 @@ public class SQLStatements {
         StringBuilder builder = new StringBuilder("CREATE TABLE ");
         builder.append(tableName);
         builder.append(" (");
-        columns.forEach((name, type) -> builder.append(name.concat(" ")).append(type.concat(", ")));
+        int counter = columns.size();
+        for(Map.Entry<String, String> entry: columns.entrySet()) {
+            if(counter > 1)
+                builder.append(entry.getKey().concat(" ")).append(entry.getValue().concat(", "));
+            else
+                builder.append(entry.getKey().concat(" ")).append(entry.getValue());
+            --counter;
+        }
         builder.append(");");
         return builder.toString();
     }
