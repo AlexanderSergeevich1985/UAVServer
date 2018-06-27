@@ -39,7 +39,15 @@ public class SQLStatements {
         builder.append(");");
         return builder.toString();
     }
+    
+    static public String storedProcedure(String procedureName, String sqlStatement) {
+        return String.format("CREATE PROCEDURE %s AS %s GO;", procedureName, sqlStatement);
+    }
 
+    static public String execProcedure(String procedureName) {
+        return String.format("EXEC %s;", procedureName);
+    }
+    
     static public String alterTable(String tableName, String columnName, String dataType) {
         return String.format("ALTER TABLE %s ADD %s %s;", tableName, columnName, dataType);
     }
