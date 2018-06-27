@@ -67,4 +67,8 @@ public class SQLStatements {
     static public String selectWithBetween(String whatSelect, String tableName, String columnName, String fValue, String sValue) {
         return String.format("SELECT %s FROM %s WHERE %s BETWEEN %s AND %s;", whatSelect, tableName, columnName, fValue, sValue);
     }
+    
+    static public String selectWithLike(String whatSelect, String tableName, String columnName, String pattern) {
+        return String.format("SELECT %s FROM %s WHERE %s LIKE %s;", whatSelect, tableName, columnName, pattern);
+    }
 }
