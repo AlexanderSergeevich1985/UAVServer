@@ -56,6 +56,10 @@ public class SQLStatements {
         return String.format("( %s ) AS %s", sqlStatement, alias);
     }
     
+    static public String createDatabase(String databaseName) {
+        return String.format("CREATE DATABASE %s;", databaseName);
+    }
+    
     static public String dropDatabase(String databaseName) {
         return String.format("DROP DATABASE %s;", databaseName);
     }
