@@ -41,7 +41,7 @@ public class SQLStatements {
     }
     
     static public String storedProcedure(String procedureName, String sqlStatement) {
-        return String.format("CREATE PROCEDURE %s AS %s GO;", procedureName, sqlStatement);
+        return String.format("CREATE PROCEDURE %s AS %s;", procedureName, sqlStatement);
     }
 
     static public String execProcedure(String procedureName) {
