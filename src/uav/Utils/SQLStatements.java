@@ -80,6 +80,19 @@ public class SQLStatements {
         return String.format("SELECT %s FROM %s WHERE %s LIKE %s;", whatSelect, tableName, columnName, pattern);
     }
     
+    static public String selectWithIn(String whatSelect, String tableName, String columnName, List<String> values) {
+        StringBuilder builder = new StringBuilder(String.format("SELECT %s FROM %s WHERE %s IN (", whatSelect, tableName, columnName));
+        Iterator<String> iterator = values.iterator();
+        values.forEach(value -> {
+            if(iterator.hasNext()) {
+                builder.append(iterator.next());
+                if(iterator.hasNext()) builder.append(", ");
+            }
+        });
+        builder.append(");");
+        return builder.toString();
+    }
+    
     static public String selectDistinct(String whatSelect, String tableName) {
         return String.format("SELECT %s FROM %s;", whatSelect, tableName);
     }
