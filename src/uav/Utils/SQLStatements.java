@@ -98,6 +98,14 @@ public class SQLStatements {
         return String.format("ALTER TABLE %s DROP COLUMN %s;", tableName, columnName);
     }
     
+    static public String createIndex(String tableName, String indexName, String columnNames) {
+        return String.format("CREATE INDEX %s ON %s %s;", indexName, tableName, columnNames);
+    }
+    
+    static public String createUniqueIndex(String tableName, String indexName, String columnNames) {
+        return String.format("CREATE UNIQUE INDEX %s ON %s %s;", indexName, tableName, columnNames);
+    }
+    
     static public String insertIntoTable(String tableName, List<String> columnNames, List<String> columnValues) {
         if(columnNames == null || columnValues == null || columnNames.size() != columnValues.size()) return null;
         StringBuilder builderColumns = new StringBuilder("(");
