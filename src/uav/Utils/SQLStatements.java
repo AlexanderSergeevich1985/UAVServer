@@ -24,6 +24,31 @@ import java.util.Map;
 
 public class SQLStatements {
     
+    public enum Constraints {
+        NOT_NULL("NOT NULL"),
+        UNIQUE("UNIQUE"),
+        PRIMARY_KEY("PRIMARY KEY"),
+        FOREIGN_KEY("FOREIGN KEY"),
+        CHECK("CHECK"),
+        DEFAULT("DEFAULT"),
+        INDEX("INDEX");
+
+        private String name;
+
+        Constraints(final String name) {
+            this.name = name;
+        }
+        public void setName(String name) {
+            this.name = name;
+        }
+        public String getName() {
+            return this.name;
+        }
+        public String appendConstrait(String value) {
+            return value.concat(" ").concat(name);
+        }
+    }
+    
     static public String storedProcedure(String procedureName, String sqlStatement) {
         return String.format("CREATE PROCEDURE %s AS %s;", procedureName, sqlStatement);
     }
