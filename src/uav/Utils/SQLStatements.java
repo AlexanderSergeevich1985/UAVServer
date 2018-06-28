@@ -124,6 +124,10 @@ public class SQLStatements {
         return result;
     }
     
+    static public String createView(String viewName, String whatSelect, String tableName, String conditions) {
+        return String.format("CREATE VIEW %s AS SELECT %s FROM %s WHERE %s;", viewName, whatSelect, tableName, conditions);
+    }
+    
     static public String insertIntoTable(String tableName, List<String> columnNames, List<String> columnValues) {
         if(columnNames == null || columnValues == null || columnNames.size() != columnValues.size()) return null;
         StringBuilder builderColumns = new StringBuilder("(");
