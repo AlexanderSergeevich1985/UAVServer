@@ -49,6 +49,76 @@ public class SQLStatements {
         }
     }
     
+    public enum Vendor {
+        MySQL("MySQL"),
+        Access("Access"),
+        SQLServer("SQLServer"),
+        ORACLE("ORACLE");
+
+        private String vendor;
+
+        Vendor(final String vendor) {
+            this.vendor = vendor;
+        }
+        public void setVendor(String vendor) {
+            this.vendor = vendor;
+        }
+        public String getVendor() {
+            return this.vendor;
+        }
+    }
+    
+    public enum AutoIncrement {
+        MySQL(Vendor.MySQL, AutoIncrStr.FOREIGN_KEY),
+        Access(Vendor.Access, AutoIncrStr.FOREIGN_KEY),
+        SQLServer(Vendor.SQLServer, AutoIncrStr.FOREIGN_KEY),
+        Oracle(Vendor.ORACLE, AutoIncrStr.FOREIGN_KEY);
+
+        private Vendor vendor;
+        private AutoIncrStr autoIncrStr;
+        
+        AutoIncrement(Vendor vendor, AutoIncrStr autoIncrStr) {
+            this.vendor = vendor;
+            this.autoIncrStr = autoIncrStr;
+        }
+
+        public void setVendor(String vendor) {
+            this.vendor.setVendor(vendor);
+        }
+        public String getVendor() {
+            return vendor.getVendor();
+        }
+
+        public void setAutoIncrStr(String autoIncrStr) {
+            this.autoIncrStr.setAutoIncrStr(autoIncrStr);
+        }
+        public String getAutoIncrStr(String value) {
+            return autoIncrStr.appendConstrait(value);
+        }
+
+        public enum AutoIncrStr {
+            NOT_NULL("NOT NULL AUTO_INCREMENT"),
+            UNIQUE("IDENTITY(%s,%s) PRIMARY KEY"),
+            PRIMARY_KEY("PRIMARY KEY AUTOINCREMENT"),
+            FOREIGN_KEY("CREATE SEQUENCE %s MINVALUE %s START WITH %s INCREMENT BY %s CACHE %s;");
+
+            private String autoIncrStr;
+
+            AutoIncrStr(final String autoIncrStr) {
+                this.autoIncrStr = autoIncrStr;
+            }
+            public void setAutoIncrStr(String autoIncrStr) {
+                this.autoIncrStr = autoIncrStr;
+            }
+            public String getAutoIncrStr() {
+                return this.autoIncrStr;
+            }
+            public String appendConstrait(String value) {
+                return value.concat(" ").concat(autoIncrStr);
+            }
+        }
+    }
+    
     static public String storedProcedure(String procedureName, String sqlStatement) {
         return String.format("CREATE PROCEDURE %s AS %s;", procedureName, sqlStatement);
     }
