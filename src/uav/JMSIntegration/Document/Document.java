@@ -33,10 +33,10 @@ public abstract class Document implements Serializable {
     private String last_modification_time;
     private Conditions conditions;
 
-    Document() {
+    public Document() {
         this.creation_time = ZonedDateTime.now().format(formatter);
     }
-    Document(String class_name) {
+    public Document(String class_name) {
         this.class_name = class_name;
         this.creation_time = ZonedDateTime.now().format(formatter);
     }
