@@ -55,8 +55,12 @@ public class DataModel<T> {
         return attributeValue;
     }
 
-    public boolean convertObjectToDM() {
+    public boolean convertObjectToDM(IDataConverter converter) {
         if(attributes == null || object == null) return false;
-        
+        converter.setParsedObject(this.object);
+        while(converter.hasNextField()) {
+            attributes.setObjectKey(converter.getNextFieldName(), converter.getNextFieldAttribute());
+        }
+        return true;
     }
 }
