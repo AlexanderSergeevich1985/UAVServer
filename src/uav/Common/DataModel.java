@@ -87,7 +87,7 @@ public class DataModel<T> {
         if(attributes == null || object == null) return false;
         Map<String, Object> dataModel = attributes.getDataScheme();
         dataModel.forEach((key, value) -> {
-            if(converter.isExistFieldWithName(key)) converter.setObjectField(key, value);
+            if(converter.isExistFieldWithName(key) != -1) converter.setObjectField(key, value);
         });
         return true;
     }
