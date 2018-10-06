@@ -23,8 +23,11 @@ import java.util.Arrays;
 import java.util.Map;
 
 class StateDesc {
-    public Timestamp timestamp;
-    public String objectId;
+    public Timestamp timeFrom;
+    public String objectIdFrom;
+
+    public Timestamp timeTo;
+    public String objectIdTo;
 }
 
 public class StateTransitionMap {
