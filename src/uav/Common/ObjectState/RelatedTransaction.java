@@ -43,7 +43,7 @@ public class RelatedTransaction {
     public boolean isValidRelatedStates(StateTransitionMap map) {
         StateDesc watchedStateDesc = new StateDesc(watchedObjectState.getTimestamp(), watchedObjectState.getObject().toString());
         for(ObjectState os: relatedStates) {
-            Byte[] transVector = calcXorVector(watchedObjectState.getBytesImageHash(), os.getBytesImageHash());
+            Byte[] transVector = calcTransitionVector(watchedObjectState.getBytesImageHash(), os.getBytesImageHash());
             watchedStateDesc.timeTo = os.getTimestamp();
             watchedStateDesc.objectIdTo = os.getObject().toString();
             if(!map.isValidStateTransVector(watchedStateDesc, transVector)) return false;
@@ -51,7 +51,7 @@ public class RelatedTransaction {
         return true;
     }
 
-    static protected Byte[] calcXorVector(final byte[] first, final byte[] second) {
+    static protected Byte[] calcTransitionVector(final byte[] first, final byte[] second) {
         Byte[] result = new Byte[first.length];
         for(int i = 0; i < first.length; ++i) {
             result[i] = (byte) (first[i] ^ second[i]);
