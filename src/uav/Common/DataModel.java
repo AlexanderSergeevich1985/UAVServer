@@ -2,6 +2,7 @@ package uav.Common;
 
 import uav.Utils.DataScheme;
 
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -61,6 +62,15 @@ public class DataModel<T> {
         while(converter.hasNextField()) {
             attributes.setObjectKey(converter.getNextFieldName(), converter.getNextFieldAttribute());
         }
+        return true;
+    }
+
+    public <T> boolean convertDMToObject(IDataConverter converter) {
+        if(attributes == null || object == null) return false;
+        Map<String, Object> dataModel = attributes.getDataScheme();
+        dataModel.forEach((key, value) -> {
+            if(converter.isExistFieldWithName(key)) converter.setObjectField(key, value);
+        });
         return true;
     }
 }
