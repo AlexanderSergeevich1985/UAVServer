@@ -18,6 +18,8 @@ SOFTWARE.
 */
 package uav.Utils.Parser;
 
+import uav.Utils.DataScheme;
+
 import java.util.List;
 
 public interface IFileParser {
