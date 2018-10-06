@@ -28,6 +28,20 @@ class StateDesc {
 
     public Timestamp timeTo;
     public String objectIdTo;
+
+    public StateDesc(Timestamp timeFrom, String objectIdFrom) {
+        this.timeFrom = timeFrom;
+        this.timeTo = timeTo;
+        this.objectIdFrom = objectIdFrom;
+        this.objectIdTo = objectIdTo;
+    }
+
+    public StateDesc(Timestamp timeFrom, Timestamp timeTo, String objectIdFrom, String objectIdTo) {
+        this.timeFrom = timeFrom;
+        this.timeTo = timeTo;
+        this.objectIdFrom = objectIdFrom;
+        this.objectIdTo = objectIdTo;
+    }
 }
 
 public class StateTransitionMap {
