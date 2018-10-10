@@ -22,7 +22,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import uav.Common.DataModels.CurrentTask;
+import uav.Common.DataModels.ExecutedTask;
 import uav.Repositories.CurrentTaskRepository;
 
 import javax.annotation.Nonnull;
@@ -36,7 +36,7 @@ public class ControlService {
     }
 
     @HystrixCommand(fallbackMethod = "reliable")
-    public Page<CurrentTask> getCurrentTask(Pageable pageable) {
+    public Page<ExecutedTask> getCurrentTask(Pageable pageable) {
         return this.repository.findAll(pageable);
     }
 
