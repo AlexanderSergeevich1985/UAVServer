@@ -20,6 +20,7 @@ package uav.Common.DataModels;
 
 import uav.Common.DataModelTypes.ExecutionTaskStatus;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -57,19 +58,21 @@ public class ExecutedTask {
     @Column(name = "task_status", nullable = false)
     private ExecutionTaskStatus taskStatus;
 
+    @Nonnull
     public Long getChartererId() {
         return chartererId;
     }
 
-    public void setChartererId(Long chartererId) {
+    public void setChartererId(@Nonnull Long chartererId) {
         this.chartererId = chartererId;
     }
 
+    @Nonnull
     public Long getExecutorId() {
         return executorId;
     }
 
-    public void setExecutorId(Long executorId) {
+    public void setExecutorId(@Nonnull Long executorId) {
         this.executorId = executorId;
     }
 
@@ -91,11 +94,12 @@ public class ExecutedTask {
         this.executionEndTime = executionEndTime;
     }
 
+    @Nonnull
     public String getExecutionType() {
         return executionType;
     }
 
-    public void setExecutionType(String executionType) {
+    public void setExecutionType(@Nonnull String executionType) {
         this.executionType = executionType;
     }
 
@@ -108,11 +112,12 @@ public class ExecutedTask {
         this.executionPlanId = executionPlanId;
     }
 
+    @Nonnull
     public ExecutionTaskStatus getTaskStatus() {
         return taskStatus;
     }
 
-    public void setTaskStatus(ExecutionTaskStatus taskStatus) {
+    public void setTaskStatus(@Nonnull ExecutionTaskStatus taskStatus) {
         this.taskStatus = taskStatus;
     }
 }
