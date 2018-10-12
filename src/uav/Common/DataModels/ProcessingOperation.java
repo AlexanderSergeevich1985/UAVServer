@@ -45,8 +45,8 @@ public class ProcessingOperation {
 
     @ManyToMany
     @JoinTable(name = "REL_NODES_OPERATIONS",
-            joinColumns = {@JoinColumn(name = "operation_id", nullable = true)},
-            inverseJoinColumns = {@JoinColumn(name = "node_id", nullable = true)})
+            joinColumns = {@JoinColumn(name = "operation_id", referencedColumnName="id", nullable = true)},
+            inverseJoinColumns = {@JoinColumn(name = "node_id", referencedColumnName="id", nullable = true)})
     private List<ClusterNodes> supportNodes = new ArrayList<>();
 
     @Nonnull

@@ -18,6 +18,8 @@
  */
 package uav.Common.DataModels;
 
+import uav.Common.DataModelTypes.EventConsumerType;
+
 import javax.annotation.Nonnull;
 import javax.persistence.*;
 
@@ -26,13 +28,17 @@ import javax.persistence.*;
 public class EventConsumer {
     public static final String EVENT_ID = "eventId";
     public static final String EVENT_GENERATOR_ID = "eventConsumerId";
-    public static final String EVENT_GENERATOR_TYPE = "eventGeneratorType";
+    public static final String EVENT_CONSUMER_TYPE = "eventConsumerType";
 
     @Column(name = "event_id", nullable = false)
     private Long eventId;
 
     @Column(name = "event_consumer_id", nullable = false)
     private Long eventConsumerId;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "consumer_type", nullable = false)
+    private EventConsumerType eventConsumerType;
 
     @Nonnull
     public Long getEventId() {
@@ -50,5 +56,14 @@ public class EventConsumer {
 
     public void setEventConsumerId(@Nonnull Long eventConsumerId) {
         this.eventConsumerId = eventConsumerId;
+    }
+
+    @Nonnull
+    public EventConsumerType getEventConsumerType() {
+        return eventConsumerType;
+    }
+
+    public void setEventConsumerType(@Nonnull EventConsumerType eventConsumerType) {
+        this.eventConsumerType = eventConsumerType;
     }
 }
