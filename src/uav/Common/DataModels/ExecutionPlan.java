@@ -18,6 +18,7 @@
  */
 package uav.Common.DataModels;
 
+import javax.annotation.Nonnull;
 import javax.persistence.*;
 import java.util.List;
 
@@ -30,11 +31,12 @@ public class ExecutionPlan {
     @JoinColumn(name="execution_plan_id", referencedColumnName="id", nullable = false)
     private List<ProcessEvent> processEvents;
 
+    @Nonnull
     public List<ProcessEvent> getProcessEvents() {
         return processEvents;
     }
 
-    public void setProcessEvents(List<ProcessEvent> processEvents) {
+    public void setProcessEvents(@Nonnull List<ProcessEvent> processEvents) {
         this.processEvents = processEvents;
     }
 }
