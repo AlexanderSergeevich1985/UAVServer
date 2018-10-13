@@ -24,7 +24,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "PROCESS_EVENTS")
-public class ProcessEvent {
+public class ProcessEvent extends BaseEntity {
     public static final String EXECUTION_PLAN_ID = "executionPlanId";
     public static final String EVENT_GENERATOR_IDS = "eventGeneratorIds";
     public static final String EVENT_CONSUMER_IDS = "eventConsumerIds";

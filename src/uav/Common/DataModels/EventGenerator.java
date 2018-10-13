@@ -25,7 +25,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "REL_EVENT_GENERATOR")
-public class EventGenerator {
+public class EventGenerator extends BaseEntity {
     public static final String EVENT_ID = "eventId";
     public static final String EVENT_GENERATOR_ID = "eventGeneratorId";
     public static final String EVENT_GENERATOR_TYPE = "eventGeneratorType";

@@ -26,7 +26,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "REG_PROCESSING_OPERATIONS")
-public class ProcessingOperation {
+public class ProcessingOperation extends BaseEntity {
     public static final int OPERATION_DESCRIPTION_MAX_LENGTH = 2000;
 
     public static final String OPERATION_NAME = "operationName";

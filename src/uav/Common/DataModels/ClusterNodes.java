@@ -26,7 +26,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "CLUSTER_NODES")
-public class ClusterNodes {
+public class ClusterNodes extends BaseEntity {
     public static final int NODE_NAME_MAX_LENGTH = 100;
     public static final int OS_NAME_MAX_LENGTH = 100;
 

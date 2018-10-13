@@ -26,7 +26,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "REF_NODE_STATISTICS")
-public class NodeStatistics {
+public class NodeStatistics extends BaseEntity {
     public static final String NODE_ID = "nodeId";
     public static final String PERFORMANCE_INDEX = "performanceIndex";
     public static final String FAILURE_RATE = "failureRate";

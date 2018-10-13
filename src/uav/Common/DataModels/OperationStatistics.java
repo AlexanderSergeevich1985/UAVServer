@@ -26,7 +26,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "REF_OPERATION_STATISTICS")
-public class OperationStatistics {
+public class OperationStatistics extends BaseEntity {
     public static final String OPERATION_ID = "operationId";
     public static final String AVERAGE_OPERATION_TIME = "averageOperationTime";
     public static final String DEVIATION_OPERATION_TIME = "deviationOperationTime";

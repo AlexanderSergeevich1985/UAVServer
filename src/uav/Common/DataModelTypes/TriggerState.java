@@ -16,27 +16,13 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-package uav.Common.DataModels;
+package uav.Common.DataModelTypes;
 
-import javax.annotation.Nonnull;
-import javax.persistence.*;
-import java.util.List;
-
-@Entity
-@Table(name = "EXECUTION_PLAN")
-public class ExecutionPlan extends BaseEntity {
-    public static final String PROCESS_EVENTS = "processEvents";
-
-    @OneToMany(fetch=FetchType.EAGER)
-    @JoinColumn(name="execution_plan_id", referencedColumnName="id", nullable = false)
-    private List<ProcessEvent> processEvents;
-
-    @Nonnull
-    public List<ProcessEvent> getProcessEvents() {
-        return processEvents;
-    }
-
-    public void setProcessEvents(@Nonnull List<ProcessEvent> processEvents) {
-        this.processEvents = processEvents;
-    }
+public enum TriggerState {
+    NEW,
+    BLOCKED,
+    FAULTED,
+    CUMULATED,
+    FIRED,
+    RESETED
 }

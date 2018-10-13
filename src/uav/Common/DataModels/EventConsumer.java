@@ -25,7 +25,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "REL_EVENT_CONSUMER")
-public class EventConsumer {
+public class EventConsumer extends BaseEntity {
     public static final String EVENT_ID = "eventId";
     public static final String EVENT_GENERATOR_ID = "eventConsumerId";
     public static final String EVENT_CONSUMER_TYPE = "eventConsumerType";

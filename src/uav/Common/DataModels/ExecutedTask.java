@@ -27,7 +27,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "EXECUTED_TASKS")
-public class ExecutedTask {
+public class ExecutedTask extends BaseEntity {
     public static final String CHARTERER_ID = "chartererId";
     public static final String EXECUTOR_ID = "executorId";
     public static final String EXECUTION_START_TIME = "executionStartTime";
