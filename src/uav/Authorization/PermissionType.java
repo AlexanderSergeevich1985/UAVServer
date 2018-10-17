@@ -16,9 +16,15 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-package uav.Common.DataModelTypes;
+package uav.Authorization;
 
-public enum EventConsumerType {
-    OPERATION_CONSUMER,
-    PROCESS_CONSUMER
+public enum PermissionType {
+    READ,
+    WRITE,
+    EXECUTE,
+    READANDWRITE,
+    READANDEXECUTE,
+    WRITEANDEXECUTE,
+    ALL,
+    DENIED
 }

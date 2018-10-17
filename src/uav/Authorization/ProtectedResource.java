@@ -16,9 +16,19 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-package uav.Common.DataModelTypes;
+package uav.Authorization;
 
-public enum EventConsumerType {
-    OPERATION_CONSUMER,
-    PROCESS_CONSUMER
+import javax.annotation.Nonnull;
+
+public class ProtectedResource {
+    private Long id;
+
+    @Nonnull
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(@Nonnull Long id) {
+        this.id = id;
+    }
 }
