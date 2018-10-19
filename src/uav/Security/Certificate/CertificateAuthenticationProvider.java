@@ -16,15 +16,15 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-package uav.Authorization;
+package uav.Security.Certificate;
 
-public enum PermissionType {
-    READ,
-    WRITE,
-    EXECUTE,
-    READANDWRITE,
-    READANDEXECUTE,
-    WRITEANDEXECUTE,
-    ALL,
-    DENIED
+import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
+
+public class CertificateAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
+    private static final String keyStorePass = "changeit";
+    private static final String trustedStorePass = "changeit";
+
+    //CertificateUserService h;
+
+
 }

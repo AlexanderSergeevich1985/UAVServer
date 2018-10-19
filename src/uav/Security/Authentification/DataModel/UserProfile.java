@@ -1,4 +1,4 @@
-package uav.Authentification.DataModel;
+package uav.Security.Authentification.DataModel;
 
 import javax.persistence.*;
 import java.io.Serializable;

@@ -1,6 +1,6 @@
-package uav.Authentification.DataModel;
+package uav.Security.Authentification.DataModel;
 
-import uav.Authentification.UserInfo;
+import uav.Security.Authentification.UserInfo;
 
 import javax.persistence.*;
 import java.util.Collection;

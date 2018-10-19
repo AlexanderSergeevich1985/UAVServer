@@ -16,14 +16,14 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-package uav.Authorization;
+package uav.Security.Authorization;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-import uav.Authentification.DataModel.UserPrincipal;
+import uav.Security.Authentification.DataModel.UserPrincipal;
 
 import javax.annotation.Nonnull;
 import java.io.Serializable;

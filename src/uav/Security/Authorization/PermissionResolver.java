@@ -16,10 +16,10 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-package uav.Authorization;
+package uav.Security.Authorization;
 
 import org.springframework.stereotype.Component;
-import uav.Authentification.DataModel.UserPrincipal;
+import uav.Security.Authentification.DataModel.UserPrincipal;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

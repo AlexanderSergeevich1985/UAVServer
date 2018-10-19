@@ -1,9 +1,9 @@
-package uav.Authentification.DataModel;
+package uav.Security.Authentification.DataModel;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import uav.Authentification.UserInfo;
+import uav.Security.Authentification.UserInfo;
 
 import java.util.*;
 

@@ -1,12 +1,12 @@
-package uav.Authentification;
+package uav.Security.Authentification;
 
 import java.util.List;
 
 /**
- * Created by administrator on 30.05.18.
+ * Created by administrator on 31.05.18.
  */
 
-public interface UserInfoDAO {
+public interface UserInfoService {
     public void addContact(UserInfo contact);
     public List<UserInfo> listContact();
     public void removeContact(Integer id);

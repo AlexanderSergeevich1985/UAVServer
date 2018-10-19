@@ -1,4 +1,4 @@
-package uav.Authentification;
+package uav.Security.Authentification;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package uav.Authentification;
+package uav.Security.Authentification;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
