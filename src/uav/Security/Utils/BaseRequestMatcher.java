@@ -33,4 +33,26 @@ public class BaseRequestMatcher implements RequestMatcher {
         }
         return paths.stream().anyMatch(m -> m.matches(request));
     }
+
+    public static Builder newBuilder() {
+        return new BaseRequestMatcher().new Builder();
+    }
+
+    public class Builder {
+        private Builder() {}
+
+        public Builder setAllowedMethods(Pattern allowedMethods) {
+            BaseRequestMatcher.this.allowedMethods = allowedMethods;
+            return this;
+        }
+
+        public Builder addPath(String pattern) {
+            BaseRequestMatcher.this.paths.add(new AntPathRequestMatcher(pattern));
+            return this;
+        }
+
+        public BaseRequestMatcher build() {
+            return BaseRequestMatcher.this;
+        }
+    }
 }
