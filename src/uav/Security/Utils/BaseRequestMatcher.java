@@ -27,7 +27,7 @@ public class BaseRequestMatcher implements RequestMatcher {
     @Override
     public boolean matches(HttpServletRequest request) {
         if(!request.isUserInRole("ROLE_ADMIN")) {
-            if(allowedMethods.matcher(request.getMethod()).matches()) {
+            if(!allowedMethods.matcher(request.getMethod()).matches()) {
                 return false;
             }
         }
