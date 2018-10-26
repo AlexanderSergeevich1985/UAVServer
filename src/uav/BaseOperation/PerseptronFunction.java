@@ -28,7 +28,7 @@ public class PerseptronFunction {
     public static double scalefactor = 60;
     long updateTime = System.currentTimeMillis();
 
-    PerseptronFunction(double[] weightCoeffArray) {
+    public PerseptronFunction(double[] weightCoeffArray) {
         weightCoeff = new DenseVector(weightCoeffArray);
     }
 
