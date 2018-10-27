@@ -22,6 +22,7 @@ import java.sql.Timestamp;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.TemporalAmount;
 import java.time.temporal.TemporalUnit;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -173,6 +174,10 @@ public class DateTimeHelper {
     public static ZonedDateTime addIntervalToDate(@Nullable final ZonedDateTime startDate, long ammountToAdd, @Nonnull final TemporalUnit units) {
         if(startDate == null || units == null) return null;
         return startDate.plus(ammountToAdd, units);
+    }
+
+    public static Instant calcExpirationDate(@Nonnull final TemporalAmount interval) {
+        return LocalDateTime.now(Clock.systemUTC()).plus(interval).toInstant(ZoneOffset.UTC);
     }
 
     @Nullable
