@@ -21,12 +21,17 @@ package uav.BaseOperation;
 import org.apache.spark.mllib.linalg.DenseVector;
 import org.apache.spark.mllib.linalg.Vector;
 import org.apache.spark.mllib.linalg.BLAS;
+import uav.Utils.DateTimeHelper;
+
+import java.util.concurrent.TimeUnit;
 
 public class PerseptronFunction {
     private Vector weightCoeff;
     private double outSignalValue;
     public static double scalefactor = 60;
-    long updateTime = System.currentTimeMillis();
+    public static double smoothFactor = 0.9; // 0.5 < smoothFactor < 0.9
+    DateTimeHelper.StopWatch timer = DateTimeHelper.StopWatch.getInstance();
+    //long updateTime = System.currentTimeMillis();
 
     public PerseptronFunction(double[] weightCoeffArray) {
         weightCoeff = new DenseVector(weightCoeffArray);
@@ -36,11 +41,13 @@ public class PerseptronFunction {
         return BLAS.dot(weightCoeff, (new DenseVector(signalArray)));
     }
 
-    //forget rest value
+    //delay rest value
     double calcDelayRestValue() {
-        long eventTime = System.currentTimeMillis();
-        long timeElapsed = eventTime - updateTime;
-        this.updateTime = eventTime;
+        //long eventTime = System.currentTimeMillis();
+        //long timeElapsed = eventTime - updateTime;
+        //this.updateTime = eventTime;
+        timer.stop();
+        long timeElapsed = timer.getTimeMeasurement(TimeUnit.MILLISECONDS);
         return outSignalValue * Math.exp(-1 * timeElapsed/scalefactor);
     }
 
@@ -52,7 +59,9 @@ public class PerseptronFunction {
     }
 
     public double updateState(double[] signalArray) {
-        this.outSignalValue = weightSignal(signalArray) + calcDelayRestValue();
+        double newOutSignalValue = weightSignal(signalArray);
+        double delayRestValue = calcDelayRestValue();
+        this.outSignalValue = smoothFactor * (newOutSignalValue - delayRestValue) + (1 - smoothFactor) * delayRestValue;
         return calcActivateFunction(this.outSignalValue);
     }
 }
