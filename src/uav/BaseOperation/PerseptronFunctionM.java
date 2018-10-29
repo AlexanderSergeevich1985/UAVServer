@@ -34,6 +34,7 @@ public class PerseptronFunctionM {
     Vector calcDiffInputSignal(double[] signalArray) {
         Vector result = new DenseVector(signalArray);
         BLAS.axpy((-1) * delayCoeff, prevInputSignal, result);
+        prevInputSignal = new DenseVector(signalArray);
         return result;
     }
 
