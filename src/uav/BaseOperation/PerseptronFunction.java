@@ -26,11 +26,13 @@ import uav.Utils.DateTimeHelper;
 import java.util.concurrent.TimeUnit;
 
 public class PerseptronFunction {
+    static final int DEFAULT_VECTOR_SIZE = 10;
+
     private Vector weightCoeff;
     private double outSignalValue;
-    public static double scalefactor = 60;
+    public double scalefactor = 60;
     public static double smoothFactor = 0.9; // 0.5 < smoothFactor < 0.9
-    DateTimeHelper.StopWatch timer = DateTimeHelper.StopWatch.getInstance();
+    private DateTimeHelper.StopWatch timer = DateTimeHelper.StopWatch.getInstance();
     //long updateTime = System.currentTimeMillis();
 
     public PerseptronFunction(double[] weightCoeffArray) {
@@ -48,6 +50,7 @@ public class PerseptronFunction {
         //this.updateTime = eventTime;
         timer.stop();
         long timeElapsed = timer.getTimeMeasurement(TimeUnit.MILLISECONDS);
+        timer.reset();
         return outSignalValue * Math.exp(-1 * timeElapsed/scalefactor);
     }
 
