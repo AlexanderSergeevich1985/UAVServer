@@ -37,6 +37,10 @@ public class BaseMessage {
     @JsonProperty("Name")
     private String name;
 
+    @JsonProperty("senderId")
+    @JacksonInject
+    private String senderId;
+
     @JsonSerialize(using = ZDTSerializer.class)
     private ZonedDateTime zdt;
 
@@ -75,6 +79,14 @@ public class BaseMessage {
         return name;
     }
 
+    public String getSenderId() {
+        return senderId;
+    }
+
+    public void setSenderId(String senderId) {
+        this.senderId = senderId;
+    }
+    
     public void setZdt(ZonedDateTime zdt) {
         this.zdt = zdt;
     }
