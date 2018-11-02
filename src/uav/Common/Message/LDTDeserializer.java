@@ -18,20 +18,20 @@
  */
 package uav.Common.Message;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class LDTSerializer extends StdSerializer<LocalDateTime> {
+public class LDTDeserializer extends StdDeserializer<LocalDateTime> {
     private String ddf = "dd/MM/yyyy HH:mm:ss";
 
-    public LDTSerializer(Class<LocalDateTime> t) {
-        super(t);
+    public LDTDeserializer() {
+        super(LocalDateTime.class);
     }
 
     public void setDefaultDateFormat(String ddf) {
@@ -43,8 +43,8 @@ public class LDTSerializer extends StdSerializer<LocalDateTime> {
     }
 
     @Override
-    public void serialize(LocalDateTime ldt, JsonGenerator jsg,
-                          SerializerProvider sp) throws IOException, JsonGenerationException {
-        jsg.writeString(ldt.format(DateTimeFormatter.ofPattern(ddf)));
+    public LocalDateTime deserialize(JsonParser jp, DeserializationContext dectx)
+            throws IOException, JsonProcessingException {
+        return LocalDateTime.parse(jp.readValueAs(String.class), DateTimeFormatter.ofPattern(ddf));
     }
 }
