@@ -29,6 +29,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Base64;
 import java.util.Map;
 
 public class URLReqHelper {
@@ -46,7 +47,7 @@ public class URLReqHelper {
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
         headers.add(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
         headers.add(HttpHeaders.USER_AGENT, "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36");
-        if(authToken != null) headers.add(HttpHeaders.AUTHORIZATION, authToken);
+        if(authToken != null) headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + Base64.getEncoder().encodeToString(authToken.getBytes()));
         HttpEntity<T> entity = new HttpEntity<>(headers);
         return entity;
     }
