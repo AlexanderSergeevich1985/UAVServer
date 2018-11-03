@@ -21,6 +21,7 @@ package uav.Utils;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Nonnull;
@@ -61,8 +62,8 @@ public class URLReqHelper {
         restTemplate.delete(uri);
     }
 
-    public static <T> void getRequestRestExchange(final URI uri, final HttpMethod method, final HttpEntity<?> request, Class<T> clazz) {
+    public static <T> ResponseEntity<T> getRequestRestExchange(final URI uri, final HttpMethod method, final HttpEntity<?> request, Class<T> clazz) {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.exchange(uri, method, request, clazz);
+        return restTemplate.exchange(uri, method, request, clazz);
     }
 }
