@@ -19,9 +19,9 @@
 package uav.Utils;
 
 import org.apache.http.client.utils.URIBuilder;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Nonnull;
@@ -40,6 +40,15 @@ public class URLReqHelper {
                 .setPath(path);
         if(params != null) params.forEach((param, value) -> builder.setParameter(param, value));
         return builder.build().toURL();
+    }
+
+    public static <T> HttpEntity<T> getHttpEntity(final String authToken) {
+        MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
+        headers.add(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+        headers.add(HttpHeaders.USER_AGENT, "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36");
+        if(authToken != null) headers.add(HttpHeaders.AUTHORIZATION, authToken);
+        HttpEntity<T> entity = new HttpEntity<>(headers);
+        return entity;
     }
 
     public static <T> T doGetRequestRest(final URI uri, @Nonnull Class<T> clazz) {
