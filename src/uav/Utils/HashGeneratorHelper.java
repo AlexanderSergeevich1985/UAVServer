@@ -35,7 +35,10 @@ public class HashGeneratorHelper {
                                                 final String algorithm) throws NoSuchAlgorithmException { //described in http://nauko-sfera.ru/wp-content/uploads/2017/08/Iyul-skie-nauchny-e-chteniya-2017..pdf - 69 page
         String mixedMessage = mixTwoString(sharedSecret, knownMessage);
         if(mixedMessage == null) return null;
-        return new String(byteToString(getHash(mixedMessage, algorithm)));
+        if(algorithm == null || algorithm.trim().isEmpty())
+            return new String(byteToString(getHash(mixedMessage, "MD5")));
+        else
+            return new String(byteToString(getHash(mixedMessage, algorithm)));
     }
 
     static public RandomGenerator getRandomGenerator(final int seed) {
