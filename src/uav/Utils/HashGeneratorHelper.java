@@ -30,9 +30,11 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
 public class HashGeneratorHelper {
+    @Nullable
     static public String getCertKeyValidatorStr(final String sharedSecret, final String knownMessage,
                                                 final String algorithm) throws NoSuchAlgorithmException { //described in http://nauko-sfera.ru/wp-content/uploads/2017/08/Iyul-skie-nauchny-e-chteniya-2017..pdf - 69 page
         String mixedMessage = mixTwoString(sharedSecret, knownMessage);
+        if(mixedMessage == null) return null;
         return new String(byteToString(getHash(mixedMessage, algorithm)));
     }
 
@@ -59,7 +61,7 @@ public class HashGeneratorHelper {
         return new String(Hex.encodeHex(getHashWithSalt(randStr, "MD5", salt)));
     }
 
-    public static byte[] getSalt(@Nonnull final RandomGenerator randGen, final int size) {
+    static public byte[] getSalt(@Nonnull final RandomGenerator randGen, final int size) {
         byte[] salt = new byte[size];
         randGen.nextBytes(salt);
         return salt;
@@ -98,7 +100,7 @@ public class HashGeneratorHelper {
     }
 
     @Nullable
-    public static String mixTwoString(final String first, final String second) {
+    static public String mixTwoString(final String first, final String second) {
         if(first == null || first.trim().length() == 0 || second == null || second.trim().length() == 0) return null;
         final int min = Math.min(first.length(), second.length());
         final StringBuilder builder = new StringBuilder(first.length() + second.length());
