@@ -111,11 +111,12 @@ public class HashGeneratorHelper {
             builder.append(first.charAt(i));
             builder.append(second.charAt(i));
         }
-        if(first.length() > second.length()) {
-            builder.append(first.substring(min));
-        }
-        else {
-            builder.append(second.substring(min));
+        if(first.length() != second.length()) {
+            if(first.length() > second.length()) {
+                builder.append(first.substring(min));
+            } else {
+                builder.append(second.substring(min));
+            }
         }
         return builder.toString();
     }
