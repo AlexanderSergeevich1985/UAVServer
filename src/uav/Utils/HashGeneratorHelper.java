@@ -25,6 +25,7 @@ import org.apache.commons.math3.random.RandomGeneratorFactory;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
@@ -75,7 +76,7 @@ public class HashGeneratorHelper {
             return Base64.decodeBase64(input);
         }
         else {
-            return Base64.encodeBase64(input.getBytes());
+            return Base64.encodeBase64(input.getBytes(StandardCharsets.UTF_8));
         }
     }
 
