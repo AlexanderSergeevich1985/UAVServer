@@ -40,10 +40,11 @@ public class RingBuffer<T> {
         storage.clear();
     }
 
-    public void append(final T element) {
-        if(writePos == readPos) return;
+    public boolean append(final T element) {
+        if(writePos == readPos) return false;
         storage.add(writePos++, element);
         if(writePos == capacity) writePos = 0;
+        return true;
     }
 
     public T update(final T element) {
