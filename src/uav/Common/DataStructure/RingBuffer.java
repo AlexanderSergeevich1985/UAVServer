@@ -70,4 +70,12 @@ public class RingBuffer<T> {
         if(index < 0 || index >= capacity) return null;
         return storage.get(index);
     }
+
+    public void reset(final int capacity) {
+        writePos = 0;
+        readPos = capacity-1;
+        storage.clear();
+        this.capacity = capacity;
+        storage = new ArrayList<>(capacity);
+    }
 }
