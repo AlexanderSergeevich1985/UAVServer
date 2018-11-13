@@ -35,14 +35,12 @@ public class MeanCalculator<T extends Number> {
             mean += (double) value;
             measurements.append(value);
             ++counter;
+            if(counter == measurements.getCapacity()) {
+                mean /= measurements.getCapacity();
+                return true;
+            }
         }
-        if(counter == measurements.getCapacity()) {
-            mean /= measurements.getCapacity();
-            return true;
-        }
-        else {
-            return false;
-        }
+        return false;
     }
 
     public double update(final T value) {
