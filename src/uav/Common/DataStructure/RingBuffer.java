@@ -78,4 +78,8 @@ public class RingBuffer<T> {
         this.capacity = capacity;
         storage = new ArrayList<>(capacity);
     }
+
+    public int getCapacity() {
+        return capacity;
+    }
 }
