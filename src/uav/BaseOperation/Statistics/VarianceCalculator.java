@@ -53,6 +53,6 @@ public class VarianceCalculator<T extends Number> extends MeanCalculator<T> {
     }
 
     public double getVariance() {
-        return variance;
+        return (variance - super.getMean());
     }
 }
