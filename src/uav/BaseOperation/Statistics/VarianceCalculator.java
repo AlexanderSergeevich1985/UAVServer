@@ -18,18 +18,15 @@
  */
 package uav.BaseOperation.Statistics;
 
-import uav.Common.DataStructure.RingBuffer;
+public class VarianceCalculator<T extends Number> extends MeanCalculator<T> {
+    private double variance;
 
-public class MeanCalculator<T extends Number> {
-    private RingBuffer<T> measurements;
-    private double mean;
-    private int counter;
-
-    public MeanCalculator(final int capacity) {
-        measurements = new RingBuffer<>(capacity);
-        counter = 0;
+    public VarianceCalculator(final int capacity) {
+        super(capacity);
+        variance = 0;
     }
 
+    @Override
     public boolean init(final T... values) {
         for(T value: values) {
             if(init(value)) return true;
@@ -37,29 +34,25 @@ public class MeanCalculator<T extends Number> {
         return false;
     }
 
+    @Override
     public boolean init(final T value) {
-        mean += (double) value;
-        measurements.append(value);
-        ++counter;
-        if(counter == measurements.getCapacity()) {
-            mean /= measurements.getCapacity();
+        variance += Math.sqrt((double) value);
+        if(super.init(value)) {
+            variance /= super.getCounter();
             return true;
         }
         return false;
     }
 
+    @Override
     public double update(final T value, T oldValue) {
-        oldValue = measurements.update(value);
-        mean -= ((double) oldValue / counter);
-        mean += ((double) value / counter);
-        return mean;
+        super.update(value, oldValue);
+        variance -= (Math.sqrt((double) oldValue) / super.getCounter());
+        variance += (Math.sqrt((double) value) / super.getCounter());
+        return (variance - super.getMean());
     }
 
-    public double getMean() {
-        return mean;
-    }
-
-    public int getCounter() {
-        return counter;
+    public double getVariance() {
+        return variance;
     }
 }
