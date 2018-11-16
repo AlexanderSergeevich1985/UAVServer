@@ -18,8 +18,14 @@
  */
 package uav.Utils;
 
+import org.apache.commons.math3.random.RandomGenerator;
+import org.apache.spark.mllib.linalg.DenseVector;
+import scala.tools.jline_embedded.internal.Nullable;
+import uav.BaseOperation.NeuralNetwork.IAutoEncoder;
+
 import javax.annotation.Nonnull;
 import javax.crypto.Cipher;
+import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.Base64;
 
@@ -45,5 +51,50 @@ public class AuthenticationHelper {
         }
         cipher.init(Cipher.ENCRYPT_MODE, publicKey);
         return Base64.getEncoder().encodeToString(cipher.doFinal(plainText.getBytes(StandardCharsets.UTF_8)));
+    }
+
+    static public String decrypt(@Nonnull String cipherText, @Nonnull PrivateKey privateKey, final String algorithm) throws Exception {
+        Cipher cipher = null;
+        if(algorithm == null || algorithm.trim().isEmpty()) {
+            cipher = Cipher.getInstance("RSA");
+        }
+        else {
+            cipher = Cipher.getInstance(algorithm);
+        }
+        byte[] bytes = Base64.getDecoder().decode(cipherText);
+        cipher.init(Cipher.DECRYPT_MODE, privateKey);
+        return new String(cipher.doFinal(bytes), StandardCharsets.UTF_8);
+    }
+
+    static public String generateEncodedSecret(@Nonnull final IAutoEncoder<Integer> autoEncoder, @Nonnull final RandomGenerator randGen) {
+        final int size = autoEncoder.getLayerInputSize(0);
+        Integer[] secret = new Integer[size];
+        for(int i = 0; i < size; ++i) {
+            secret[i] = HashGeneratorHelper.getRandLimited(randGen, 33, 126);
+        }
+        double[] encodedSecret = autoEncoder.encodeVector(secret).toArray();
+        StringBuilder  builder = new StringBuilder(encodedSecret.length);
+        for(int i = 0; i < encodedSecret.length; ++i) {
+            if(i != 0) builder.append(" ");
+            builder.append(encodedSecret[i]);
+        }
+        return builder.toString();
+    }
+
+    @Nullable
+    static public String decodeSecretStr(@Nonnull final IAutoEncoder<Integer> autoEncoder, final String encodedSecretStr) {
+        if(encodedSecretStr == null || encodedSecretStr.isEmpty()) return null;
+        String[] encodedSecretArray = encodedSecretStr.split(" ");
+        double[] encodedSecret = new double[encodedSecretArray.length];
+        for(int i = 0; i < encodedSecretArray.length; ++i) {
+            encodedSecret[i] = Double.parseDouble(encodedSecretArray[i]);
+        }
+        Integer[] decodedSecret = autoEncoder.decodeVector(new DenseVector(encodedSecret));
+        StringBuilder  builder = new StringBuilder(encodedSecret.length);
+        for(int i = 0; i < decodedSecret.length; ++i) {
+            char symbol = Character.forDigit(decodedSecret[i], 10);
+            builder.append(symbol);
+        }
+        return builder.toString();
     }
 }
