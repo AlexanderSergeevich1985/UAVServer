@@ -82,7 +82,7 @@ public class AuthenticationHelper {
     }
 
     @Nullable
-    static public String decodeSecretStr(@Nonnull final IAutoEncoder<Integer> autoEncoder, final String encodedSecretStr) {
+    static public String decodeSecretStr(@Nonnull final IAutoEncoder<Integer> autoEncoder, final String encodedSecretStr) { //it's better to use transforming autoencoder
         if(encodedSecretStr == null || encodedSecretStr.isEmpty()) return null;
         String[] encodedSecretArray = encodedSecretStr.split(" ");
         double[] encodedSecret = new double[encodedSecretArray.length];
