@@ -45,6 +45,8 @@ public class ClusterNodes extends BaseEntity {
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = ProcessingOperation.SUPPORT_NODES)
     private List<ClusterNodes> supportNodes = new ArrayList<>();
 
+    protected ClusterNodes() {}
+
     @Nullable
     public String getNodeName() {
         return nodeName;

@@ -31,6 +31,8 @@ public class ExecutionPlan extends BaseEntity {
     @JoinColumn(name="execution_plan_id", referencedColumnName="id", nullable = false)
     private List<ProcessEvent> processEvents;
 
+    protected ExecutionPlan() {}
+
     @Nonnull
     public List<ProcessEvent> getProcessEvents() {
         return processEvents;

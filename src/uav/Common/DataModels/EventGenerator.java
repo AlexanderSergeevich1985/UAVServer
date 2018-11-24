@@ -40,6 +40,8 @@ public class EventGenerator extends BaseEntity {
     @Column(name = "generator_type", nullable = false)
     private EventGeneratorType eventGeneratorType;
 
+    protected EventGenerator() {}
+
     @Nonnull
     public Long getEventId() {
         return eventId;

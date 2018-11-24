@@ -44,6 +44,8 @@ public class NodeStatistics extends BaseEntity {
     @Column(name = "failure_probability", nullable = true, precision = 5, scale = 4)
     private Double failureProbability;
 
+    protected NodeStatistics() {}
+
     @Nonnull
     public Long getNodeId() {
         return nodeId;

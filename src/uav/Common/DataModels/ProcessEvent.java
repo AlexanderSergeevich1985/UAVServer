@@ -44,6 +44,8 @@ public class ProcessEvent extends BaseEntity {
     @Column(name = "event_evaluator_name", nullable = false)
     private String eventEvaluatorName;
 
+    protected ProcessEvent() {}
+
     @Nonnull
     public Long getExecutionPlanId() {
         return executionPlanId;

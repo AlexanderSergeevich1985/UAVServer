@@ -49,6 +49,8 @@ public class ProcessingOperation extends BaseEntity {
             inverseJoinColumns = {@JoinColumn(name = "node_id", referencedColumnName="id", nullable = true)})
     private List<ClusterNodes> supportNodes = new ArrayList<>();
 
+    protected ProcessingOperation() {}
+
     @Nonnull
     public String getOperationName() {
         return operationName;

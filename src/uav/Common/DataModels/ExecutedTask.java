@@ -58,6 +58,8 @@ public class ExecutedTask extends BaseEntity {
     @Column(name = "task_status", nullable = false)
     private ExecutionTaskStatus taskStatus;
 
+    protected ExecutedTask() {}
+
     @Nonnull
     public Long getChartererId() {
         return chartererId;

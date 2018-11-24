@@ -40,6 +40,8 @@ public class EventConsumer extends BaseEntity {
     @Column(name = "consumer_type", nullable = false)
     private EventConsumerType eventConsumerType;
 
+    protected EventConsumer() {}
+
     @Nonnull
     public Long getEventId() {
         return eventId;

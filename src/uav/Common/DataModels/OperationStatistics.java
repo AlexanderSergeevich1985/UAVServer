@@ -44,6 +44,8 @@ public class OperationStatistics extends BaseEntity {
     @Column(name = "failure_probability", nullable = true, precision = 5, scale = 4)
     private Double failureProbability;
 
+    protected OperationStatistics() {}
+
     @Nonnull
     public Long getOperationId() {
         return operationId;
