@@ -24,6 +24,9 @@ import java.util.Date;
 @Entity
 @Table(name = "USERINFOS")
 public class UserInfo {
+
+    protected UserInfo() {}
+
     public Integer getId() { return id; }
     public void setId(Integer id_) { id = id_; }
     public String getFirstName() { return firstname; }

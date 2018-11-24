@@ -12,6 +12,8 @@ public class UserPrivilege {
     private String privilegeName;
     @ManyToMany(mappedBy = "privileges")
     private Collection<UserRole> roles;
+
+    protected UserPrivilege() {}
     
     public void setId(Integer id) {
         this.id = id;

@@ -22,6 +22,8 @@ public class UserRole {
             inverseJoinColumns = @JoinColumn(
                     name = "privilegeId", referencedColumnName = "id"))
     private Collection<UserPrivilege> privileges;
+
+    protected UserRole() {}
     
     public void setId(Integer id) {
         this.id = id;

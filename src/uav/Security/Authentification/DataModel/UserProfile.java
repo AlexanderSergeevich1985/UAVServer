@@ -10,6 +10,9 @@ import java.io.Serializable;
 @Entity
 @Table(name="USER_PROFILE")
 public class UserProfile implements Serializable {
+
+    protected UserProfile() {}
+
     public Integer getId() {
         return id;
     }
