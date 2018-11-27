@@ -60,6 +60,7 @@ public class BaseOAuth2RefreshToken implements Serializable, OAuth2RefreshToken 
     }
 
     @Override
+    @JsonValue
     @Nonnull
     public String getValue() {
         return value;
@@ -69,6 +70,7 @@ public class BaseOAuth2RefreshToken implements Serializable, OAuth2RefreshToken 
         this.value = value;
     }
 
+    @JsonValue
     @Nonnull
     public Date getExpiration() {
         return this.expiration;
