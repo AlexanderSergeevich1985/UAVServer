@@ -119,7 +119,7 @@ public class BaseOAuth2AccessToken extends BaseEntity implements OAuth2AccessTok
     }
 
     public int getExpiresIn() {
-        return this.expiration != null ? Long.valueOf(Duration.between(this.expiration.toInstant(), Instant.now()).toMillis() / 1000L).intValue() : 0;
+        return this.expiration != null ? Long.valueOf(Duration.between(this.expiration.toInstant(), DateTimeHelper.getLocalCurrentTime().toInstant(ZoneOffset.UTC)).toMillis() / 1000L).intValue() : 0;
     }
 
     public void setExpiresIn(final long interval) {
