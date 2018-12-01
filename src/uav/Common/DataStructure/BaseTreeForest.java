@@ -41,14 +41,21 @@ public class BaseTreeForest<T, ID extends Serializable> {
         }
     }
 
-    public void addValue(final ID key, final T value) {
+    public void addKeyValue(final ID key, final T value) {
         this.getTreeContainer(key).put(key, value);
     }
 
-    public T removeValue(final ID key) {
-        return this.getTreeContainer(key).remove(key);
+    public boolean isExistKeyValue(final ID key) {
+        return this.getTreeContainer(key).containsKey(key);
     }
 
+    public T getValueByKey(final ID key) {
+        return this.getTreeContainer(key).get(key);
+    }
+
+    public T removeKeyValue(final ID key) {
+        return this.getTreeContainer(key).remove(key);
+    }
 
     public ConcurrentSkipListMap<ID, T> getTreeContainer(final ID key) {
         int treeIndex = key.hashCode() % this.forestSize;
