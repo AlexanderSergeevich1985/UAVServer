@@ -23,7 +23,7 @@ import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class BaseTreeForest<T, ID extends Serializable> {
-    public static final int DEFAULT_FOREST_SIZE = 2;
+    public static final int DEFAULT_FOREST_SIZE = 10;
 
     private int forestSize;
 
