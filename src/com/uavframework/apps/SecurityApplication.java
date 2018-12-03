@@ -1,4 +1,4 @@
-package Applications.Services.SecurityService;
+package com.uavframework.apps;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

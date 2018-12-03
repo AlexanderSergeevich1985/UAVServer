@@ -16,7 +16,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-package Applications.Services;
+package com.uavframework.apps.Services;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
