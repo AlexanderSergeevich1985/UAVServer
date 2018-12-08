@@ -49,10 +49,10 @@ public class VarianceCalculator<T extends Number> extends MeanCalculator<T> {
         super.update(value, oldValue);
         variance -= (Math.sqrt((double) oldValue) / super.getCounter());
         variance += (Math.sqrt((double) value) / super.getCounter());
-        return (variance - super.getMean());
+        return (variance - Math.sqrt(super.getMean()));
     }
 
     public double getVariance() {
-        return (variance - super.getMean());
+        return (variance - Math.sqrt(super.getMean()));
     }
 }
