@@ -36,7 +36,7 @@ public class VarianceCalculator<T extends Number> extends MeanCalculator<T> {
 
     @Override
     public boolean init(final T value) {
-        variance += Math.sqrt((double) value);
+        variance += Math.pow((double) value, 2);
         if(super.init(value)) {
             variance /= super.getCounter();
             return true;
