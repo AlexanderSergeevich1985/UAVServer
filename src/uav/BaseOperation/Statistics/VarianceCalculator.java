@@ -47,12 +47,12 @@ public class VarianceCalculator<T extends Number> extends MeanCalculator<T> {
     @Override
     public double update(final T value, T oldValue) {
         super.update(value, oldValue);
-        variance -= (Math.sqrt((double) oldValue) / super.getCounter());
-        variance += (Math.sqrt((double) value) / super.getCounter());
-        return (variance - Math.sqrt(super.getMean()));
+        variance -= (Math.pow((double) oldValue, 2) / super.getCounter());
+        variance += (Math.pow((double) value, 2) / super.getCounter());
+        return (variance - Math.pow(super.getMean(), 2));
     }
 
     public double getVariance() {
-        return (variance - Math.sqrt(super.getMean()));
+        return (variance - Math.pow(super.getMean(), 2));
     }
 }
