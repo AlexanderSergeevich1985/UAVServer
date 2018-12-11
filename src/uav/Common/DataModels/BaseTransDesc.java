@@ -18,9 +18,13 @@
  */
 package uav.Common.DataModels;
 
+import uav.Common.DataModelTypes.TransactionType;
+
 import javax.annotation.Nonnull;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -31,6 +35,10 @@ public class BaseTransDesc implements Serializable {
 
     @Column(name = "amount", nullable = false)
     private BigDecimal amount;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "transaction_type", length = 20, nullable = false)
+    private TransactionType type;
 
     public BaseTransDesc() {}
 
@@ -50,5 +58,14 @@ public class BaseTransDesc implements Serializable {
 
     public void setAmount(@Nonnull BigDecimal amount) {
         this.amount = amount;
+    }
+
+    @Nonnull
+    public TransactionType getType() {
+        return type;
+    }
+
+    public void setType(@Nonnull TransactionType type) {
+        this.type = type;
     }
 }
