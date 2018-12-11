@@ -44,7 +44,8 @@ public class LightDeviationCalculator extends LightMeanCalculator {
         return deviation;
     }
 
-    public void setDeviation(double deviation) {
+    public void setDeviation(final double deviation) {
+        this.variance = Math.pow(deviation, 2);
         this.deviation = deviation;
     }
 }
