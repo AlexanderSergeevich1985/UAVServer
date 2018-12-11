@@ -26,7 +26,7 @@ import java.math.BigDecimal;
 
 @Embeddable
 public class BaseTransDesc implements Serializable {
-    @Column(name = "transactor_uuid", nullable = false)
+    @Column(name = "transactor_uuid", length = 500, nullable = false)
     private String transactorUuid;
 
     @Column(name = "amount", nullable = false)
