@@ -18,53 +18,33 @@
  */
 package uav.BaseOperation.Statistics;
 
-import javax.annotation.Nonnull;
+public class LightDeviationCalculator extends LightMeanCalculator {
+    private double variance;
+    private double deviation;
 
-public class LightMeanCalculator {
-    private double mean;
-    private int size;
-    private IDistributionSampler sampler;
-
-    public LightMeanCalculator(final double mean, final int size) {
-        this.mean = mean;
-        this.size = size;
+    public LightDeviationCalculator(final double devInitValue, final double meanInitValue, final int size) {
+        super(meanInitValue, size);
+        this.variance = Math.pow(devInitValue, 2);
+        this.deviation = devInitValue;
     }
 
-    public LightMeanCalculator(final double mean, final int size, @Nonnull IDistributionSampler sampler) {
-        this.mean = mean;
-        this.size = size;
-        this.sampler = sampler;
-    }
-
+    @Override
     public double update(final double newValue) {
-        double sampleValue = (sampler != null) ? sampler.sampleValue() : this.mean;
-        mean -= ((double) sampleValue / size);
-        mean += ((double) newValue / size);
-        sampler.updateMean(mean);
-        return sampleValue;
+        double oldMean = super.getMean();
+        double sampleValue = super.update(newValue);
+        variance -= (Math.pow(sampleValue, 2) / super.getSize());
+        variance += (Math.pow(newValue, 2) / super.getSize());
+        variance += Math.pow(oldMean, 2);
+        variance -= Math.pow(super.getMean(), 2);
+        deviation = Math.sqrt(variance);
+        return deviation;
     }
 
-    public double getMean() {
-        return this.mean;
+    public double getDeviation() {
+        return deviation;
     }
 
-    public void setMean(double mean) {
-        this.mean = mean;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    public IDistributionSampler getSampler() {
-        return sampler;
-    }
-
-    public void setSampler(IDistributionSampler sampler) {
-        this.sampler = sampler;
+    public void setDeviation(double deviation) {
+        this.deviation = deviation;
     }
 }
