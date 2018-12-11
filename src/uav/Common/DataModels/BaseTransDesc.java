@@ -32,6 +32,8 @@ public class BaseTransDesc implements Serializable {
     @Column(name = "amount", nullable = false)
     private BigDecimal amount;
 
+    public BaseTransDesc() {}
+
     @Nonnull
     public String getTransactorUuid() {
         return transactorUuid;
