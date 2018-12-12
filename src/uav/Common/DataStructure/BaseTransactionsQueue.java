@@ -36,7 +36,7 @@ public class BaseTransactionsQueue<T extends BaseTransaction> {
 
     public boolean registerTransaction(final T transaction) {
         try {
-            if(writeFlag.get()) writeFlag.set(false); else return false;
+            if(!writeFlag.compareAndSet(true, false)) return false;
             transaction.setTransactionId(counter.incrementAndGet());
             ZonedDateTime zdtNow = DateTimeHelper.getCurrentTimeWithTimeZone("UTC");
             transaction.setCreationTime(DateTimeHelper.zdtToTimestamp(zdtNow));
@@ -50,7 +50,7 @@ public class BaseTransactionsQueue<T extends BaseTransaction> {
 
     public T unregisterTransaction() {
         try {
-            if(readFlag.get()) readFlag.set(false); else return null;
+            if(!readFlag.compareAndSet(true, false)) return null;
             return queue.pollFirst();
         }
         finally {
