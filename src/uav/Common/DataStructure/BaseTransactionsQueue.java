@@ -103,7 +103,7 @@ public class BaseTransactionsQueue<T extends BaseTransaction> {
     }
 
     private static class Node<E> {
-        E item;
+        volatile E item;
         Node<E> next;
         Node<E> prev;
 
