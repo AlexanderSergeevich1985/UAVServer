@@ -34,7 +34,7 @@ public class BaseTransactionsQueue<T extends BaseTransaction> {
     private volatile Node<T> first;
     private volatile Node<T> last;
 
-    public BaseTransactionsQueue(final int size) {
+    public BaseTransactionsQueue() {
         counter = 0L;
         this.first = new Node<>();
         this.last = new Node<>();
