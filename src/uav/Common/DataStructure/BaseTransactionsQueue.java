@@ -30,6 +30,7 @@ public class BaseTransactionsQueue<T extends BaseTransaction> {
     private AtomicLong size = new AtomicLong(0);
     private AtomicBoolean writeFlag = new AtomicBoolean(true);
     private AtomicBoolean readFlag = new AtomicBoolean(true);
+
     private volatile Node<T> first;
     private volatile Node<T> last;
 
