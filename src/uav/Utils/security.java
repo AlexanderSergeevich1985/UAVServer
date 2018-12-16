@@ -133,54 +133,72 @@ public class security {
             }
         }
     }
+
+    static public PrivateKey bytesToPrivateKey(final byte[] bytes) {
+        try {
+            PKCS8EncodedKeySpec pkcs8ks = new PKCS8EncodedKeySpec(bytes);
+            KeyFactory keyf = KeyFactory.getInstance("RSA");
+            PrivateKey privateKey = keyf.generatePrivate(pkcs8ks);
+            return privateKey;
+        }
+        catch(final NoSuchAlgorithmException nsae) {
+            if(logger.isLoggable(Level.INFO)) {
+                logger.log(Level.INFO, "NoSuchAlgorithmException occurred: ", nsae);
+            }
+        }
+        catch(final InvalidKeySpecException ikse) {
+            if(logger.isLoggable(Level.INFO)) {
+                logger.log(Level.INFO, "InvalidKeySpecException occurred: ", ikse);
+            }
+        }
+        return null;
+    }
+
     static public PrivateKey loadPrivatekey(String fileName) {
         Path path = Paths.get(fileName);
         PrivateKey key = null;
         try {
             byte[] bytes = Files.readAllBytes(path);
-            PKCS8EncodedKeySpec pkcs8ks = new PKCS8EncodedKeySpec(bytes);
-            KeyFactory keyf = KeyFactory.getInstance("RSA");
-            key = keyf.generatePrivate(pkcs8ks);
+            key = bytesToPrivateKey(bytes);
         }
-        catch(IOException ioex) {
+        catch(final IOException ioex) {
             if(logger.isLoggable(Level.SEVERE)) {
                 logger.log(Level.SEVERE, "IOException occur : ", ioex);
             }
         }
-        catch(NoSuchAlgorithmException nsaex) {
-            if(logger.isLoggable(Level.SEVERE)) {
-                logger.log(Level.SEVERE, "NoSuchAlgorithmException occur : ", nsaex);
-            }
-        }
-        catch(InvalidKeySpecException ikspex) {
-            if(logger.isLoggable(Level.SEVERE)) {
-                logger.log(Level.SEVERE, "InvalidKeySpecException occur : ", ikspex);
-            }
-        }
         return key;
     }
+
+    static public PublicKey bytesToPublicKey(final byte[] bytes) {
+        try {
+            X509EncodedKeySpec x509eks = new X509EncodedKeySpec(bytes);
+            KeyFactory keyf = KeyFactory.getInstance("RSA");
+            PublicKey publicKey = keyf.generatePublic(x509eks);
+            return publicKey;
+        }
+        catch(final NoSuchAlgorithmException nsae) {
+            if(logger.isLoggable(Level.INFO)) {
+                logger.log(Level.INFO, "NoSuchAlgorithmException occurred: ", nsae);
+            }
+        }
+        catch(final InvalidKeySpecException ikse) {
+            if(logger.isLoggable(Level.INFO)) {
+                logger.log(Level.INFO, "InvalidKeySpecException occurred: ", ikse);
+            }
+        }
+        return null;
+    }
+
     static public PublicKey loadPublickey(String fileName) {
         Path path = Paths.get(fileName);
         PublicKey key = null;
         try {
             byte[] bytes = Files.readAllBytes(path);
-            X509EncodedKeySpec x509eks = new X509EncodedKeySpec(bytes);
-            KeyFactory keyf = KeyFactory.getInstance("RSA");
-            key = keyf.generatePublic(x509eks);
+            key = bytesToPublicKey(bytes);
         }
-        catch(IOException ioex) {
+        catch(final IOException ioex) {
             if(logger.isLoggable(Level.SEVERE)) {
                 logger.log(Level.SEVERE, "IOException occur : ", ioex);
-            }
-        }
-        catch(NoSuchAlgorithmException nsaex) {
-            if(logger.isLoggable(Level.SEVERE)) {
-                logger.log(Level.SEVERE, "NoSuchAlgorithmException occur : ", nsaex);
-            }
-        }
-        catch(InvalidKeySpecException ikspex) {
-            if(logger.isLoggable(Level.SEVERE)) {
-                logger.log(Level.SEVERE, "InvalidKeySpecException occur : ", ikspex);
             }
         }
         return key;
