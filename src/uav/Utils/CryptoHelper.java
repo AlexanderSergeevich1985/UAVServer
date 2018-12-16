@@ -18,7 +18,9 @@ SOFTWARE.
 */
 package uav.Utils;
 
+import javax.xml.bind.DatatypeConverter;
 import java.io.*;
+import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,10 +33,10 @@ import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class security {
-    private static final Logger logger = Logger.getLogger(security.class.getName());
+public class CryptoHelper {
+    private static final Logger logger = Logger.getLogger(CryptoHelper.class.getName());
     
-    static public byte[] serializeObject(Object obj) throws IOException {
+    static public byte[] serializeObject(final Object obj) throws IOException {
         byte[] bytes = null;
         try(ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(baos)
@@ -45,27 +47,52 @@ public class security {
         }
         return bytes;
     }
+
+    static public Object deserializeObject(final byte[] bytes) throws IOException, ClassNotFoundException {
+        try(ByteArrayInputStream baos = new ByteArrayInputStream(bytes);
+            ObjectInputStream oos = new ObjectInputStream(baos)) {
+            return oos.readObject();
+        }
+    }
+
+    public static String getObjectDigest(final Serializable obj) throws IOException, NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        byte[] objDigest = md.digest(serializeObject(obj));
+        return DatatypeConverter.printHexBinary(objDigest);
+    }
+
+    public static BigInteger getObjectChecksum(final Serializable obj) throws IOException, NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("SHA1");
+        byte[] objDigest = md.digest(serializeObject(obj));
+        return new BigInteger(1, objDigest);
+    }
+
     static public byte[] signMessage(String msg, PrivateKey key) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
         return signMessage(msg.getBytes(), key);
     }
+
     static public byte[] signMessage(ByteBuffer msg, PrivateKey key) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
         return signMessage(msg.array(), key);
     }
+
     static public byte[] signMessage(byte[] msg, PrivateKey key) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
         Signature rsa = Signature.getInstance("SHA1withRSA");
         rsa.initSign(key);
         rsa.update(msg);
         return rsa.sign();
     }
+
     static public boolean verifySignature(ByteBuffer signToVerify, ByteBuffer signedData, final PublicKey key, String algorithmName) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
         return verifySignature(signToVerify.array(), signedData.array(), key, algorithmName);
     }
+
     static public boolean verifySignature(final byte[] signToVerify, final byte[] signedData, final PublicKey key, String algorithmName) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
         Signature sign = Signature.getInstance(algorithmName);
         sign.initVerify(key);
         sign.update(signedData);
         return sign.verify(signToVerify);
     }
+
     static public KeyPair generate_RSA() {
         KeyPair keyPair = null;
         try {
@@ -82,6 +109,7 @@ public class security {
         }
         return keyPair;
     }
+
     static public void writeKey(String fileName, Key key) {
         try(FileOutputStream out = new FileOutputStream(fileName)) {
             out.write(key.getEncoded());
@@ -97,6 +125,7 @@ public class security {
             }
         }
     }
+
     static public void writePublicKeyAsText(String fileName, PublicKey publicKey) {
         try(Writer out = new FileWriter(fileName)) {
             Base64.Encoder encoder = Base64.getEncoder();
@@ -115,6 +144,7 @@ public class security {
             }
         }
     }
+
     static public void writePrivateKeyAsText(String fileName, PrivateKey key) {
         try(Writer out = new FileWriter(fileName)) {
             Base64.Encoder encoder = Base64.getEncoder();
