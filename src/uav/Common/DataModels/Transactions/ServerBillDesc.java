@@ -21,7 +21,6 @@ package uav.Common.DataModels.Transactions;
 import org.hibernate.validator.constraints.Length;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Lob;
@@ -29,33 +28,32 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 @Embeddable
-public class ClientBillDesc {
-    @Column(name = "issuer_id")
-    @Length(max = 500)
-    private String issuerId;
-
+public class ServerBillDesc {
     @Column(name = "uuid", columnDefinition = "BINARY(32)", nullable = false)
     private UUID uuid;
+
+    @Column(name = "owner_id", nullable = false)
+    @Length(max = 500)
+    private String ownerId;
 
     @Lob
     @Column(name = "public_key", nullable = false)
     private byte[] publicKey;
+
+    @Lob
+    @Column(name = "private_key", nullable = false)
+    private byte[] privateKey;
+
+    @Lob
+    @Column(name = "cipher_key", nullable = false)
+    private byte[] cipherKey;
 
     @Column(name = "amount", nullable = false)
     private BigDecimal amount;
 
     @Column(name = "shared_secret")
     @Length(max = 500)
-    private String encodedSharedSecret;
-
-    @Nullable
-    public String getIssuerId() {
-        return issuerId;
-    }
-
-    public void setIssuerId(@Nullable String issuerId) {
-        this.issuerId = issuerId;
-    }
+    private String sharedSecret;
 
     @Nonnull
     public UUID getUuid() {
@@ -64,6 +62,15 @@ public class ClientBillDesc {
 
     public void setUuid(@Nonnull UUID uuid) {
         this.uuid = uuid;
+    }
+
+    @Nonnull
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(@Nonnull String ownerId) {
+        this.ownerId = ownerId;
     }
 
     @Nonnull
@@ -76,6 +83,24 @@ public class ClientBillDesc {
     }
 
     @Nonnull
+    public byte[] getPrivateKey() {
+        return privateKey;
+    }
+
+    public void setPrivateKey(@Nonnull byte[] privateKey) {
+        this.privateKey = privateKey;
+    }
+
+    @Nonnull
+    public byte[] getCipherKey() {
+        return cipherKey;
+    }
+
+    public void setCipherKey(@Nonnull byte[] cipherKey) {
+        this.cipherKey = cipherKey;
+    }
+
+    @Nonnull
     public BigDecimal getAmount() {
         return amount;
     }
@@ -84,12 +109,11 @@ public class ClientBillDesc {
         this.amount = amount;
     }
 
-    @Nullable
-    public String getEncodedSharedSecret() {
-        return encodedSharedSecret;
+    public String getSharedSecret() {
+        return sharedSecret;
     }
 
-    public void setEncodedSharedSecret(@Nullable String encodedSharedSecret) {
-        this.encodedSharedSecret = encodedSharedSecret;
+    public void setSharedSecret(String sharedSecret) {
+        this.sharedSecret = sharedSecret;
     }
 }
