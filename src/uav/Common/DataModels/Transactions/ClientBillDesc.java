@@ -41,8 +41,8 @@ public class ClientBillDesc {
     @Column(name = "public_key", nullable = false)
     private byte[] publicKey;
 
-    @Column(name = "amount", nullable = false)
-    private BigDecimal amount;
+    @Column(name = "account_balance", nullable = false)
+    private BigDecimal accountBalance;
 
     @Column(name = "shared_secret")
     @Length(max = 500)
@@ -76,12 +76,12 @@ public class ClientBillDesc {
     }
 
     @Nonnull
-    public BigDecimal getAmount() {
-        return amount;
+    public BigDecimal getAccountBalance() {
+        return accountBalance;
     }
 
-    public void setAmount(@Nonnull BigDecimal amount) {
-        this.amount = amount;
+    public void setAccountBalance(@Nonnull BigDecimal accountBalance) {
+        this.accountBalance = accountBalance;
     }
 
     @Nullable
