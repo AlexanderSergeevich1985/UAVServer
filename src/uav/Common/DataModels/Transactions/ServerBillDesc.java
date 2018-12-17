@@ -21,6 +21,7 @@ package uav.Common.DataModels.Transactions;
 import org.hibernate.validator.constraints.Length;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Lob;
@@ -109,11 +110,12 @@ public class ServerBillDesc {
         this.amount = amount;
     }
 
+    @Nullable
     public String getSharedSecret() {
         return sharedSecret;
     }
 
-    public void setSharedSecret(String sharedSecret) {
+    public void setSharedSecret(@Nullable String sharedSecret) {
         this.sharedSecret = sharedSecret;
     }
 }
