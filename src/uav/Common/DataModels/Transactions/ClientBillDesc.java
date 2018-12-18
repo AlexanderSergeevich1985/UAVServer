@@ -48,6 +48,8 @@ public class ClientBillDesc {
     @Length(max = 500)
     private String encodedSharedSecret;
 
+    public ClientBillDesc() {}
+
     @Nullable
     public String getIssuerId() {
         return issuerId;

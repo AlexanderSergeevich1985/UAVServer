@@ -56,6 +56,8 @@ public class ServerBillDesc {
     @Length(max = 500)
     private String sharedSecret;
 
+    public ServerBillDesc() {}
+
     @Nonnull
     public UUID getUuid() {
         return uuid;
