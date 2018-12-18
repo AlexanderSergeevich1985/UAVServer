@@ -41,6 +41,8 @@ public class BaseBill extends BaseEntity {
     @Column(name = "indentation", length = 256, nullable = false)
     private String indentation;  //output of cryptographic function over bill data; the cryptographic function stored by bill issued service for further bill validation
 
+    public BaseBill() {}
+
     @Nonnull
     public UUID getUuid() {
         return uuid;
