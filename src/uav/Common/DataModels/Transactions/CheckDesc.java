@@ -24,11 +24,12 @@ import javax.annotation.Nonnull;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Lob;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Embeddable
-public class CheckDesc {
+public class CheckDesc implements Serializable {
     @Column(name = "sign_time", nullable = false)
     private Timestamp signTime;
 

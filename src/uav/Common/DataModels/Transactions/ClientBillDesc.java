@@ -25,11 +25,12 @@ import javax.annotation.Nullable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Lob;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.UUID;
 
 @Embeddable
-public class ClientBillDesc {
+public class ClientBillDesc implements Serializable {
     @Column(name = "issuer_id")
     @Length(max = 500)
     private String issuerId;

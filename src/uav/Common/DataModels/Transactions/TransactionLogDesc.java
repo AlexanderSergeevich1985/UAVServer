@@ -6,11 +6,12 @@ import javax.annotation.Nonnull;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Lob;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Embeddable
-public class TransactionLogDesc {
+public class TransactionLogDesc implements Serializable {
     @Column(name = "completion_time", nullable = false)
     private Timestamp completionTime;
 

@@ -25,11 +25,12 @@ import javax.annotation.Nullable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Lob;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.UUID;
 
 @Embeddable
-public class ServerBillDesc {
+public class ServerBillDesc implements Serializable {
     @Column(name = "uuid", columnDefinition = "BINARY(32)", nullable = false)
     private UUID uuid;
 

@@ -30,13 +30,14 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CryptoHelper {
     private static final Logger logger = Logger.getLogger(CryptoHelper.class.getName());
     
-    static public byte[] serializeObject(final Object obj) throws IOException {
+    static public byte[] serializeObject(final Serializable obj) throws IOException {
         byte[] bytes = null;
         try(ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(baos)
@@ -65,6 +66,12 @@ public class CryptoHelper {
         MessageDigest md = MessageDigest.getInstance("SHA1");
         byte[] objDigest = md.digest(serializeObject(obj));
         return new BigInteger(1, objDigest);
+    }
+
+    static public String getUuuid() throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        md.update(UUID.randomUUID().toString().getBytes("UTF-8"));
+        return DatatypeConverter.printHexBinary(md.digest());
     }
 
     static public byte[] signMessage(String msg, PrivateKey key) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
