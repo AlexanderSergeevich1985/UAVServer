@@ -31,7 +31,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@Scope("request")
 @RequestMapping("/security")
 public class SecurityController {
     @Autowired
@@ -40,7 +39,7 @@ public class SecurityController {
     @PostMapping(path = "authentication")
     public ResponseEntity<?> createAccessToken(@Valid @RequestBody OAuth2Authentication authentication) {
         OAuth2AccessToken newAccessToken = this.tokenServices.createAccessToken(authentication);
-        if(newAccessToken == null) {
+        if(newAccessToken != null) {
             return ResponseEntity.ok(newAccessToken);
         }
         return ResponseEntity.badRequest().body("Invalid data request");
@@ -49,7 +48,7 @@ public class SecurityController {
     @PostMapping(path = "renovation")
     public ResponseEntity<?> renewAccessToken(@RequestParam(value = "refresh_token", required = false) String refreshToken, @Valid @RequestBody TokenRequest request) {
         OAuth2AccessToken renewAccessToken = this.tokenServices.refreshAccessToken(refreshToken, request);
-        if(renewAccessToken == null) {
+        if(renewAccessToken != null) {
             return ResponseEntity.ok(renewAccessToken);
         }
         return ResponseEntity.badRequest().body("Invalid data request");
