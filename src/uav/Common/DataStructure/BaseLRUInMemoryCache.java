@@ -22,11 +22,13 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class BaseLRUInMemoryCache<T, ID extends Serializable> implements ICache<T, ID> {
     private AtomicLong size;
     private ConcurrentLinkedQueue<Item<ID>> queue;
-    private BaseTreeForest<Object, ID> storage = new BaseTreeForest<>();
+    private BaseTreeForest<ObjectWrap, ID> storage;
 
     public BaseLRUInMemoryCache() {
         this.queue = new ConcurrentLinkedQueue<>();
@@ -36,7 +38,7 @@ public class BaseLRUInMemoryCache<T, ID extends Serializable> implements ICache<
 
     public boolean add(final ID key, final Object value) {
         if(this.queue.add(new Item<>(key, Instant.now()))) {
-            this.storage.addKeyValue(key, value);
+            this.storage.addKeyValue(key, new ObjectWrap(value));
             this.size.incrementAndGet();
             return true;
         }
@@ -44,7 +46,11 @@ public class BaseLRUInMemoryCache<T, ID extends Serializable> implements ICache<
     }
 
     public T get(final ID key) {
-        return (T) this.storage.getValueByKey(key);
+        return (T) this.storage.getValueByKey(key).item;
+    }
+
+    public ObjectWrap getObjectWrap(final ID key) {
+        return this.storage.getValueByKey(key);
     }
 
     public boolean remove(ID key) {
@@ -93,6 +99,25 @@ public class BaseLRUInMemoryCache<T, ID extends Serializable> implements ICache<
 
         public void setTimestamp(final Instant timestamp) {
             this.timestamp = timestamp;
+        }
+    }
+
+    public static class ObjectWrap {
+        private Object item;
+        public ReadWriteLock rwLock = new ReentrantReadWriteLock();
+
+        ObjectWrap() {}
+
+        ObjectWrap(final Object item) {
+            this.item = item;
+        }
+
+        public final <T> T readItem() {
+            return (T) (rwLock.readLock().tryLock() ? item : null);
+        }
+
+        public <T> T writeItem() {
+            return (T) (rwLock.writeLock().tryLock() ? item : null);
         }
     }
 }
