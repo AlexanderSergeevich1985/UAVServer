@@ -1,0 +1,98 @@
+/**The MIT License (MIT)
+ Copyright (c) 2018 by AleksanderSergeevich
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ */
+package uav.Common.DataStructure;
+
+import java.io.Serializable;
+import java.time.Instant;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicLong;
+
+public class BaseLRUInMemoryCache<T, ID extends Serializable> implements ICache<T, ID> {
+    private AtomicLong size;
+    private ConcurrentLinkedQueue<Item<ID>> queue;
+    private BaseTreeForest<Object, ID> storage = new BaseTreeForest<>();
+
+    public BaseLRUInMemoryCache() {
+        this.queue = new ConcurrentLinkedQueue<>();
+        this.storage = new BaseTreeForest<>();
+        this.size = new AtomicLong(0);
+    }
+
+    public boolean add(final ID key, final Object value) {
+        if(this.queue.add(new Item<>(key, Instant.now()))) {
+            this.storage.addKeyValue(key, value);
+            this.size.incrementAndGet();
+            return true;
+        }
+        return false;
+    }
+
+    public T get(final ID key) {
+        return (T) this.storage.getValueByKey(key);
+    }
+
+    public boolean remove(ID key) {
+        if(this.queue.remove(key)) {
+            this.storage.removeKeyValue(key);
+            this.size.decrementAndGet();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean removeLast() {
+        Item<ID> lastItem = this.queue.poll();
+        if(lastItem != null) {
+            this.storage.removeKeyValue(lastItem.item);
+            this.size.decrementAndGet();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean clear() {
+        this.queue.clear();
+        this.storage.clear();
+        return true;
+    }
+
+    public long size() {
+        return this.size.get();
+    }
+
+    public static class Item<E> {
+        E item;
+        private Instant timestamp;
+
+        Item() {}
+
+        Item(final E item, final Instant timestamp) {
+            this.item = item;
+            this.timestamp = timestamp;
+        }
+
+        public Instant getTimestamp() {
+            return timestamp;
+        }
+
+        public void setTimestamp(final Instant timestamp) {
+            this.timestamp = timestamp;
+        }
+    }
+}

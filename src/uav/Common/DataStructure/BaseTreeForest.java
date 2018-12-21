@@ -61,4 +61,9 @@ public class BaseTreeForest<T, ID extends Serializable> {
         int treeIndex = key.hashCode() % this.forestSize;
         return forest.get(treeIndex);
     }
+
+    public void clear() {
+        this.forest.parallelStream().forEach(ConcurrentSkipListMap::clear);
+        this.forest.clear();
+    }
 }
