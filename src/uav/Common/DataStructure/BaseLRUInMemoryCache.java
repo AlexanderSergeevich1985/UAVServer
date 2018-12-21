@@ -86,7 +86,7 @@ public class BaseLRUInMemoryCache<T, ID extends Serializable> implements ICache<
         Item<ID> lastItem = this.queue.poll();
         if(lastItem != null) {
             ObjectWrap objWrap = this.storage.getValueByKey(lastItem.item);
-            if(objWrap.counter.get() == 1) {
+            if(objWrap != null && objWrap.counter.get() == 1) {
                 this.storage.removeKeyValue(lastItem.item);
                 this.size.decrementAndGet();
             }
