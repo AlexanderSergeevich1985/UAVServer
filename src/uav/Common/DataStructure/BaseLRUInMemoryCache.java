@@ -18,14 +18,20 @@
  */
 package uav.Common.DataStructure;
 
+import uav.Utils.DateTimeHelper;
+
+import javax.annotation.Nonnull;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class BaseLRUInMemoryCache<T, ID extends Serializable> implements ICache<T, ID> {
+    static public int DEFAULT_EXPIRATION_PERIOD = 5 * 60 * 1000;
+    static public long DEFAULT_MAX_CASHE_SIZE = 5 * 60 * 1000;
     private AtomicLong size;
     private ConcurrentLinkedQueue<Item<ID>> queue;
     private BaseTreeForest<ObjectWrap, ID> storage;
@@ -62,6 +68,15 @@ public class BaseLRUInMemoryCache<T, ID extends Serializable> implements ICache<
         return false;
     }
 
+    public boolean removeLastIfExpired(@Nonnull final TimeUnit units, @Nonnull final long interval) {
+        Item<ID> lastItem = this.queue.peek();
+        lastItem.stopWatch.stop();
+        if(lastItem.stopWatch.getTimeMeasurement(units) >= interval) {
+            return removeLast();
+        }
+        return false;
+    }
+
     public boolean removeLast() {
         Item<ID> lastItem = this.queue.poll();
         if(lastItem != null) {
@@ -82,23 +97,34 @@ public class BaseLRUInMemoryCache<T, ID extends Serializable> implements ICache<
         return this.size.get();
     }
 
+    public void runClearThread() {
+        Thread cleanerThread = new Thread(() -> {
+            while(!Thread.currentThread().isInterrupted()) {
+                try {
+                    TimeUnit.SECONDS.sleep(DEDAULT_UPDATE_PERIOD);
+                    while(this.size.get() > DEFAULT_MAX_CASHE_SIZE) {
+                        removeLast();
+                    }
+                    while(removeLastIfExpired(TimeUnit.MILLISECONDS, DEFAULT_EXPIRATION_PERIOD)) {}
+                }
+                catch(InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+        });
+        cleanerThread.setDaemon(true);
+        cleanerThread.start();
+    }
+
     public static class Item<E> {
         E item;
-        private Instant timestamp;
+        private DateTimeHelper.StopWatch stopWatch;
 
         Item() {}
 
         Item(final E item, final Instant timestamp) {
             this.item = item;
-            this.timestamp = timestamp;
-        }
-
-        public Instant getTimestamp() {
-            return timestamp;
-        }
-
-        public void setTimestamp(final Instant timestamp) {
-            this.timestamp = timestamp;
+            this.stopWatch = DateTimeHelper.StopWatch.getInstance();
         }
     }
 
