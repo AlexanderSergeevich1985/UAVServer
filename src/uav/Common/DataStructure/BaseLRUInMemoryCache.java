@@ -31,7 +31,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class BaseLRUInMemoryCache<T, ID extends Serializable> implements ICache<T, ID> {
     static public int DEFAULT_EXPIRATION_PERIOD = 5 * 60 * 1000;
-    static public long DEFAULT_MAX_CASHE_SIZE = 5 * 60 * 1000;
+    static public long DEFAULT_MAX_CASHE_SIZE = 1000;
     private AtomicLong size;
     private ConcurrentLinkedQueue<Item<ID>> queue;
     private BaseTreeForest<ObjectWrap, ID> storage;
