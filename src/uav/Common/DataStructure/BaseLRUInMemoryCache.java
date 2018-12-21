@@ -142,7 +142,7 @@ public class BaseLRUInMemoryCache<T, ID extends Serializable> implements ICache<
     public static class ObjectWrap {
         private Object item;
         public ReadWriteLock rwLock = new ReentrantReadWriteLock();
-        public AtomicInteger counter = new AtomicInteger(1);
+        private AtomicInteger counter = new AtomicInteger(1);
 
         ObjectWrap() {}
 
