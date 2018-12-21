@@ -54,15 +54,13 @@ public class BaseLRUInMemoryCache<T, ID extends Serializable> implements ICache<
 
     public T get(final ID key) {
         ObjectWrap objWrap = this.storage.getValueByKey(key);
-        objWrap.counter.incrementAndGet();
-        this.queue.add(new Item<>(key, Instant.now()));
+        if(this.queue.add(new Item<>(key, Instant.now()))) objWrap.counter.incrementAndGet();
         return (T) objWrap.item;
     }
 
     public ObjectWrap getObjectWrap(final ID key) {
         ObjectWrap objWrap = this.storage.getValueByKey(key);
-        objWrap.counter.incrementAndGet();
-        this.queue.add(new Item<>(key, Instant.now()));
+        if(this.queue.add(new Item<>(key, Instant.now()))) objWrap.counter.incrementAndGet();
         return objWrap;
     }
 
