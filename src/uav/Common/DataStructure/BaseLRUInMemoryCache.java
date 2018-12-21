@@ -25,6 +25,7 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -52,11 +53,17 @@ public class BaseLRUInMemoryCache<T, ID extends Serializable> implements ICache<
     }
 
     public T get(final ID key) {
-        return (T) this.storage.getValueByKey(key).item;
+        ObjectWrap objWrap = this.storage.getValueByKey(key);
+        objWrap.counter.incrementAndGet();
+        this.queue.add(new Item<>(key, Instant.now()));
+        return (T) objWrap.item;
     }
 
     public ObjectWrap getObjectWrap(final ID key) {
-        return this.storage.getValueByKey(key);
+        ObjectWrap objWrap = this.storage.getValueByKey(key);
+        objWrap.counter.incrementAndGet();
+        this.queue.add(new Item<>(key, Instant.now()));
+        return objWrap;
     }
 
     public boolean remove(ID key) {
@@ -80,8 +87,14 @@ public class BaseLRUInMemoryCache<T, ID extends Serializable> implements ICache<
     public boolean removeLast() {
         Item<ID> lastItem = this.queue.poll();
         if(lastItem != null) {
-            this.storage.removeKeyValue(lastItem.item);
-            this.size.decrementAndGet();
+            ObjectWrap objWrap = this.storage.getValueByKey(lastItem.item);
+            if(objWrap.counter.get() == 1) {
+                this.storage.removeKeyValue(lastItem.item);
+                this.size.decrementAndGet();
+            }
+            else {
+                objWrap.counter.decrementAndGet();
+            }
             return true;
         }
         return false;
@@ -131,6 +144,7 @@ public class BaseLRUInMemoryCache<T, ID extends Serializable> implements ICache<
     public static class ObjectWrap {
         private Object item;
         public ReadWriteLock rwLock = new ReentrantReadWriteLock();
+        public AtomicInteger counter = new AtomicInteger(1);
 
         ObjectWrap() {}
 
