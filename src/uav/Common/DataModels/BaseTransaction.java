@@ -18,29 +18,63 @@
  */
 package uav.Common.DataModels;
 
+import uav.Common.DataModels.Transactions.TransactionDesc;
+
 import javax.annotation.Nonnull;
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.annotation.Nullable;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "TRANSACTIONS")
 public class BaseTransaction extends BaseEntity {
-    @Column(name = "transaction_id", nullable = false)
+    @Column(name = "transaction_id")
     private Long transactionId;
 
+    @Column(name = "known_msg")
+    private String knownMsg;
+
     @Embedded
-    private BaseTransDesc transactionDescriptor;
+    private TransactionDesc transactionDescriptor;
+
+    @Lob
+    @Column(name = "transaction_signature", nullable = false)
+    private byte[] transactionSignature;
 
     public BaseTransaction() {}
 
-    @Nonnull
+    @Nullable
     public Long getTransactionId() {
         return transactionId;
     }
 
-    public void setTransactionId(@Nonnull Long transactionId) {
+    public void setTransactionId(@Nullable Long transactionId) {
         this.transactionId = transactionId;
+    }
+
+    @Nullable
+    public String getKnownMsg() {
+        return knownMsg;
+    }
+
+    public void setKnownMsg(@Nullable String knownMsg) {
+        this.knownMsg = knownMsg;
+    }
+
+    @Nonnull
+    public TransactionDesc getTransactionDescriptor() {
+        return transactionDescriptor;
+    }
+
+    public void setTransactionDescriptor(@Nonnull TransactionDesc transactionDescriptor) {
+        this.transactionDescriptor = transactionDescriptor;
+    }
+
+    @Nonnull
+    public byte[] getTransactionSignature() {
+        return transactionSignature;
+    }
+
+    public void setTransactionSignature(@Nonnull byte[] transactionSignature) {
+        this.transactionSignature = transactionSignature;
     }
 }
