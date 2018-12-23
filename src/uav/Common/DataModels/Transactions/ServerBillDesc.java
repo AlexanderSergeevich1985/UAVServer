@@ -39,6 +39,10 @@ public class ServerBillDesc implements Serializable {
     private String ownerId;
 
     @Lob
+    @Column(name = "owner_public_key", nullable = false)
+    private byte[] ownerPublicKey;
+
+    @Lob
     @Column(name = "public_key", nullable = false)
     private byte[] publicKey;
 
@@ -75,6 +79,15 @@ public class ServerBillDesc implements Serializable {
 
     public void setOwnerId(@Nonnull String ownerId) {
         this.ownerId = ownerId;
+    }
+
+    @Nonnull
+    public byte[] getOwnerPublicKey() {
+        return ownerPublicKey;
+    }
+
+    public void setOwnerPublicKey(@Nonnull byte[] ownerPublicKey) {
+        this.ownerPublicKey = ownerPublicKey;
     }
 
     @Nonnull
