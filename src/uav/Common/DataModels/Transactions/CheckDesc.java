@@ -48,6 +48,10 @@ public class CheckDesc implements Serializable {
     @Column(name = "payer_public_key", nullable = false)
     private byte[] payerPublicKey;
 
+    @Lob
+    @Column(name = "payee_public_key", nullable = false)
+    private byte[] payeePublicKey;
+
     public CheckDesc() {}
 
     @Nonnull
@@ -93,5 +97,14 @@ public class CheckDesc implements Serializable {
 
     public void setPayerPublicKey(@Nonnull byte[] payerPublicKey) {
         this.payerPublicKey = payerPublicKey;
+    }
+
+    @Nonnull
+    public byte[] getPayeePublicKey() {
+        return payeePublicKey;
+    }
+
+    public void setPayeePublicKey(@Nonnull byte[] payeePublicKey) {
+        this.payeePublicKey = payeePublicKey;
     }
 }
