@@ -42,6 +42,10 @@ public class ClientBillDesc implements Serializable {
     @Column(name = "public_key", nullable = false)
     private byte[] publicKey;
 
+    @Lob
+    @Column(name = "server_public_key", nullable = false)
+    private byte[] serverPublicKey;
+
     @Column(name = "account_balance", nullable = false)
     private BigDecimal accountBalance;
 
@@ -76,6 +80,15 @@ public class ClientBillDesc implements Serializable {
 
     public void setPublicKey(@Nonnull byte[] publicKey) {
         this.publicKey = publicKey;
+    }
+
+    @Nonnull
+    public byte[] getServerPublicKey() {
+        return serverPublicKey;
+    }
+
+    public void setServerPublicKey(@Nonnull byte[] serverPublicKey) {
+        this.serverPublicKey = serverPublicKey;
     }
 
     @Nonnull
