@@ -1,12 +1,12 @@
 package com.uavframework.apps.Controllers;
 
-import com.uavframework.apps.Services.PaymentServices;
+import com.uavframework.apps.Services.Payments.PaymentsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import uav.Common.DataModels.BaseBill;
 import uav.Common.DataModels.BaseTransaction;
 import uav.Common.DataModels.Transactions.BaseCheck;
+import uav.Common.DataModels.Transactions.BaseClientBill;
 
 import javax.validation.Valid;
 
@@ -14,11 +14,11 @@ import javax.validation.Valid;
 @RequestMapping("/payments")
 public class PaymentController {
     @Autowired
-    private PaymentServices paymentServices;
+    private PaymentsService paymentServices;
 
     @PostMapping(path = "/moneyTransfer")
     public ResponseEntity<?> transferMoney(@Valid @RequestBody BaseTransaction transaction) {
-        BaseBill newBill = this.paymentServices.transferMoney(transaction);
+        BaseClientBill newBill = this.paymentServices.transferMoney(transaction);
         if(newBill != null) {
             return ResponseEntity.ok(newBill);
         }
@@ -27,7 +27,7 @@ public class PaymentController {
 
     @PostMapping(path = "/cashCheck")
     public ResponseEntity<?> cashCheck(@Valid @RequestBody BaseCheck check) {
-        BaseBill newBill = this.paymentServices.cashCheck(check);
+        BaseClientBill newBill = this.paymentServices.cashCheck(check);
         if(newBill != null) {
             return ResponseEntity.ok(newBill);
         }
@@ -36,7 +36,7 @@ public class PaymentController {
 
     @PostMapping(path = "/{billId}/refresh")
     public ResponseEntity<?> refreshBill(@PathVariable String billId) {
-        BaseBill newBill = this.paymentServices.refreshBill(billId);
+        BaseClientBill newBill = this.paymentServices.refreshBill(billId);
         if(newBill != null) {
             return ResponseEntity.ok(newBill);
         }
