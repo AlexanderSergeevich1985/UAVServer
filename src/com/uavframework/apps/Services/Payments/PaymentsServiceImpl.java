@@ -53,7 +53,7 @@ public class PaymentsServiceImpl implements PaymentsService {
 
         try {
             if(BaseTransactionChecker.verifyTransaction(transaction, payerBill)) {
-                result = BaseTransactionChecker.transferMoney(payerBill, payeeBill);
+                result = BaseTransactionChecker.transferMoney(payerBill, payeeBill, transaction.getTransactionDescriptor().getTransferAmount());
             }
         }
         catch(final Exception ex) {
@@ -72,8 +72,8 @@ public class PaymentsServiceImpl implements PaymentsService {
         BaseClientBill result = null;
 
         try {
-            if(BaseTransactionChecker.verifyCheck(check)) {
-                result = BaseTransactionChecker.transferMoney(payerBill, payeeBill);
+            if(BaseTransactionChecker.verifyCheck(check, payerBill, payeeBill)) {
+                result = BaseTransactionChecker.transferMoney(payerBill, payeeBill, check.getCheckDesc().getTransferAmount());
             }
         }
         catch(final Exception ex) {
