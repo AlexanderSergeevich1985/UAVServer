@@ -66,22 +66,22 @@ public class PaymentsServiceImpl implements PaymentsService {
     }
 
     public BaseClientBill cashCheck(final BaseCheck check) {
-        if(BaseTransactionChecker.verifyCheck(check)) {
-            BaseServerBill payerBill = this.repository.findOne(check.getCheckDesc().getPayerId());
-            BaseServerBill payeeBill = this.repository.findOne(check.getCheckDesc().getPayeeId());
-            if(payerBill == null || payeeBill == null) return null;
-            BaseClientBill result = null;
+        BaseServerBill payerBill = this.repository.findOne(check.getCheckDesc().getPayerId());
+        BaseServerBill payeeBill = this.repository.findOne(check.getCheckDesc().getPayeeId());
+        if(payerBill == null || payeeBill == null) return null;
+        BaseClientBill result = null;
 
-            try {
+        try {
+            if(BaseTransactionChecker.verifyCheck(check)) {
                 result = BaseTransactionChecker.transferMoney(payerBill, payeeBill);
             }
-            catch(final Exception ex) {
-                if(logger.isLoggable(Level.INFO)) {
-                    logger.log(Level.INFO, "Exception occurred: ", ex);
-                }
-            }
-            return result;
         }
+        catch(final Exception ex) {
+            if(logger.isLoggable(Level.INFO)) {
+                logger.log(Level.INFO, "Exception occurred: ", ex);
+            }
+        }
+        return result;
     }
 
     public BaseClientBill refreshBill(String billId) {
